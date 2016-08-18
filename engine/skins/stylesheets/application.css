@@ -12411,3 +12411,11 @@ ul.jqueryFileTree a:hover {
 		font-size: 12px;
 	}
 }
+
+
+fieldset.condition_block {
+    display: none;
+    border: 1px solid gray;
+    padding:20px;
+    margin:20px;
+}

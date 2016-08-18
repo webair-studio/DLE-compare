@@ -739,3 +739,15 @@ function media_upload ( area, author, news_id, wysiwyg){
   });
 
 }).call(this);
+
+
+$(document).ready(function() {
+    $("#static_tpl_select").change(function() {
+        if($(this).val() == "condition") {
+            $(".condition_block").css("display", "block");
+        }
+        else {
+            $(".condition_block").css("display", "none");
+        }
+    });
+});

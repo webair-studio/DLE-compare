@@ -32,6 +32,7 @@ if( !defined( 'E_DEPRECATED' ) ) {
 
 @ini_set ( 'display_errors', true );
 @ini_set ( 'html_errors', false );
+@ini_set ( 'upload_max_filesize', '10M' );
 
 define ( 'DATALIFEENGINE', true );
 define ( 'ROOT_DIR', dirname ( __FILE__ ) );

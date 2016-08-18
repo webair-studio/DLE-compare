@@ -14,6 +14,7 @@
  Назначение: редактирование статистических страниц
 =====================================================
 */
+
 if( !defined( 'DATALIFEENGINE' ) OR !defined( 'LOGGED_IN' ) ) {
 	die( "Hacking attempt!" );
 }
@@ -620,9 +621,498 @@ HTML;
 		<div class="form-group">
 		  <label class="control-label col-lg-2">{$lang['static_tpl']}</label>
 		  <div class="col-lg-10">
-			<input type="text" name="static_tpl" size="20">.tpl&nbsp;<span class="help-button" data-rel="popover" data-html="true" data-trigger="hover" data-placement="right" data-content="{$lang['hint_stpl']}" >?</span>
+            <select name="static_tpl" id="static_tpl_select">
+                <option value="">static</option>
+                <option value="condition">condition</option>
+                <option value="nam_doveryut">nam_doveryut</option>
+            </select>.tpl&nbsp;<span class="help-button" data-rel="popover" data-html="true" data-trigger="hover" data-placement="right" data-content="{$lang['hint_stpl']}" >?</span>
 		  </div>
 		 </div>	
+         
+         
+         <fieldset class="condition_block"{$condition_block}>
+            <h3>Настройки шаблона condition</h2>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Заголовок преимуществ</label>
+                <input type="text" name="condition_name_preim" id="condition_name_preim" style="width:50%" value="{$row_condition['condition_name_preim']}">
+            </div>
+            <br>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Преимущество 1</label>
+                <input type="text" name="condition_preim_1" id="condition_preim_1" style="width:50%" value="{$row_condition['condition_preim_1']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Преимущество 2</label>
+                <input type="text" name="condition_preim_2" id="condition_preim_2" style="width:50%" value="{$row_condition['condition_preim_2']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Преимущество 3</label>
+                <input type="text" name="condition_preim_3" id="condition_preim_3" style="width:50%" value="{$row_condition['condition_preim_3']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Преимущество 4</label>
+                <input type="text" name="condition_preim_4" id="condition_preim_4" style="width:50%" value="{$row_condition['condition_preim_4']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Преимущество 5</label>
+                <input type="text" name="condition_preim_5" id="condition_preim_5" style="width:50%" value="{$row_condition['condition_preim_5']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Преимущество 6</label>
+                <input type="text" name="condition_preim_6" id="condition_preim_6" style="width:50%" value="{$row_condition['condition_preim_6']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Преимущество 7</label>
+                <input type="text" name="condition_preim_7" id="condition_preim_7" style="width:50%" value="{$row_condition['condition_preim_7']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Преимущество 8</label>
+                <input type="text" name="condition_preim_8" id="condition_preim_8" style="width:50%" value="{$row_condition['condition_preim_8']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Преимущество 9</label>
+                <input type="text" name="condition_preim_9" id="condition_preim_9" style="width:50%" value="{$row_condition['condition_preim_9']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Преимущество 10</label>
+                <input type="text" name="condition_preim_10" id="condition_preim_10" style="width:50%" value="{$row_condition['condition_preim_10']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Текст преимуществ 1</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_under_preim_1" id="condition_under_preim_1">{$row_condition['condition_under_preim_1']}</textarea>
+                <script src="/engine/skins/ckeditor/ckeditor.js"></script>
+                <script>
+                    CKEDITOR.replace( 'condition_under_preim_1' );
+                </script>
+            </div>
+             <div class="form-group">
+                <label class="control-label col-lg-2">Текст преимуществ 2</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_under_preim_2" id="condition_under_preim_2">{$row_condition['condition_under_preim_2']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_under_preim_2' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Цена под преимуществами</label>
+                <input type="text" name="condition_under_preim_price" id="condition_under_preim_price" style="width:50%" value="{$row_condition['condition_under_preim_price']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под преимуществами 1 (текст)</label>
+                <input type="text" name="condition_icon_under_preim_text_1" id="condition_icon_under_preim_text_1" style="width:50%" value="{$row_condition['condition_icon_under_preim_text_1']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под преимуществами 1 (alt к иконке)</label>
+                <input type="text" name="condition_icon_under_preim_alt_1" id="condition_icon_under_preim_alt_1" style="width:50%" value="{$row_condition['condition_icon_under_preim_alt_1']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под преимуществами 2 (текст)</label>
+                <input type="text" name="condition_icon_under_preim_text_2" id="condition_icon_under_preim_text_2" style="width:50%" value="{$row_condition['condition_icon_under_preim_text_2']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под преимуществами 2 (alt к иконке)</label>
+                <input type="text" name="condition_icon_under_preim_alt_2" id="condition_icon_under_preim_alt_2" style="width:50%" value="{$row_condition['condition_icon_under_preim_alt_2']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под преимуществами 3 (текст)</label>
+                <input type="text" name="condition_icon_under_preim_text_3" id="condition_icon_under_preim_text_3" style="width:50%" value="{$row_condition['condition_icon_under_preim_text_3']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под преимуществами 3 (alt к иконке)</label>
+                <input type="text" name="condition_icon_under_preim_alt_3" id="condition_icon_under_preim_alt_3" style="width:50%" value="{$row_condition['condition_icon_under_preim_alt_3']}">
+            </div>
+            
+            
+            
+            <div class="form-group">
+                <label class="control-label col-lg-2">Заголовок поломок</label>
+                <input type="text" name="condition_name_polomki" id="condition_name_polomki" style="width:50%" value="{$row_condition['condition_name_polomki']}">
+            </div>
+            <br>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Поломка 1</label>
+                <input type="text" name="condition_polomki_1" id="condition_polomki_1" style="width:50%" value="{$row_condition['condition_polomki_1']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Поломка 2</label>
+                <input type="text" name="condition_polomki_2" id="condition_polomki_2" style="width:50%" value="{$row_condition['condition_polomki_2']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Поломка 3</label>
+                <input type="text" name="condition_polomki_3" id="condition_polomki_3" style="width:50%" value="{$row_condition['condition_polomki_3']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Поломка 4</label>
+                <input type="text" name="condition_polomki_4" id="condition_polomki_4" style="width:50%" value="{$row_condition['condition_polomki_4']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Поломка 5</label>
+                <input type="text" name="condition_polomki_5" id="condition_polomki_5" style="width:50%" value="{$row_condition['condition_polomki_5']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Поломка 6</label>
+                <input type="text" name="condition_polomki_6" id="condition_polomki_6" style="width:50%" value="{$row_condition['condition_polomki_6']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Поломка 7</label>
+                <input type="text" name="condition_polomki_7" id="condition_polomki_7" style="width:50%" value="{$row_condition['condition_polomki_7']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Поломка 8</label>
+                <input type="text" name="condition_polomki_8" id="condition_polomki_8" style="width:50%" value="{$row_condition['condition_polomki_8']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Поломка 9</label>
+                <input type="text" name="condition_polomki_9" id="condition_polomki_9" style="width:50%" value="{$row_condition['condition_polomki_9']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Поломка 10</label>
+                <input type="text" name="condition_polomki_10" id="condition_polomki_10" style="width:50%" value="{$row_condition['condition_polomki_10']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Текст поломок</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_under_polomki_1" id="condition_under_polomki_1">{$row_condition['condition_under_polomki_1']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_under_polomki_1' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под поломками 1 (текст)</label>
+                <input type="text" name="condition_icon_under_polomki_text_1" id="condition_icon_under_polomki_text_1" style="width:50%" value="{$row_condition['condition_icon_under_polomki_text_1']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под поломками 1 (alt к иконке)</label>
+                <input type="text" name="condition_icon_under_polomki_alt_1" id="condition_icon_under_polomki_alt_1" style="width:50%" value="{$row_condition['condition_icon_under_polomki_alt_1']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под поломками 2 (текст)</label>
+                <input type="text" name="condition_icon_under_polomki_text_2" id="condition_icon_under_polomki_text_2" style="width:50%" value="{$row_condition['condition_icon_under_polomki_text_2']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под поломками 2 (alt к иконке)</label>
+                <input type="text" name="condition_icon_under_polomki_alt_2" id="condition_icon_under_polomki_alt_2" style="width:50%" value="{$row_condition['condition_icon_under_polomki_alt_2']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под поломками 3 (текст)</label>
+                <input type="text" name="condition_icon_under_polomki_text_3" id="condition_icon_under_polomki_text_3" style="width:50%" value="{$row_condition['condition_icon_under_polomki_text_3']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под поломками 3 (alt к иконке)</label>
+                <input type="text" name="condition_icon_under_polomki_alt_3" id="condition_icon_under_polomki_alt_3" style="width:50%" value="{$row_condition['condition_icon_under_polomki_alt_3']}">
+            </div>
+            
+            
+            
+            <br>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Заголовок ремонта</label>
+                <input type="text" name="condition_name_remont" id="condition_name_remont" style="width:50%" value="{$row_condition['condition_name_remont']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Таблица ремонта</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_table_remont" id="condition_table_remont">{$row_condition['condition_table_remont']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_table_remont' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Подпись под таблицей ремонта</label>
+                <input type="text" name="condition_table_remont_podpis" id="condition_table_remont_podpis" style="width:50%" value="{$row_condition['condition_table_remont_podpis']}">
+            </div>
+            
+            <br>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Заголовок списка работ</label>
+                <input type="text" name="condition_work_list_name" id="condition_work_list_name" style="width:50%" value="{$row_condition['condition_work_list_name']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Работа 1</label>
+                <input type="text" name="condition_work_list_1" id="condition_work_list_1" style="width:50%" value="{$row_condition['condition_work_list_1']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Работа 2</label>
+                <input type="text" name="condition_work_list_2" id="condition_work_list_2" style="width:50%" value="{$row_condition['condition_work_list_2']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Работа 3</label>
+                <input type="text" name="condition_work_list_3" id="condition_work_list_3" style="width:50%" value="{$row_condition['condition_work_list_3']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Работа 4</label>
+                <input type="text" name="condition_work_list_4" id="condition_work_list_4" style="width:50%" value="{$row_condition['condition_work_list_4']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Работа 5</label>
+                <input type="text" name="condition_work_list_5" id="condition_work_list_5" style="width:50%" value="{$row_condition['condition_work_list_5']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Работа 6</label>
+                <input type="text" name="condition_work_list_6" id="condition_work_list_6" style="width:50%" value="{$row_condition['condition_work_list_6']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Работа 7</label>
+                <input type="text" name="condition_work_list_7" id="condition_work_list_7" style="width:50%" value="{$row_condition['condition_work_list_7']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Работа 8</label>
+                <input type="text" name="condition_work_list_8" id="condition_work_list_8" style="width:50%" value="{$row_condition['condition_work_list_8']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Работа 9</label>
+                <input type="text" name="condition_work_list_9" id="condition_work_list_9" style="width:50%" value="{$row_condition['condition_work_list_9']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Работа 10</label>
+                <input type="text" name="condition_work_list_10" id="condition_work_list_10" style="width:50%" value="{$row_condition['condition_work_list_10']}">
+            </div>
+            
+            <br>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Заголовок обслуживания</label>
+                <input type="text" name="condition_name_service" id="condition_name_service" style="width:50%" value="{$row_condition['condition_name_service']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Таблица обслуживания</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_table_service" id="condition_table_service">{$row_condition['condition_table_service']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_table_service' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Подпись под таблицей обслуживания</label>
+                <input type="text" name="condition_table_service_podpis" id="condition_table_service_podpis" style="width:50%" value="{$row_condition['condition_table_service_podpis']}">
+            </div>
+            
+            <br>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Заголовок процесса работы</label>
+                <input type="text" name="condition_name_steps" id="condition_name_steps" style="width:50%" value="{$row_condition['condition_name_steps']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Этап 1</label>
+                <input type="text" name="condition_step_1" id="condition_step_1" style="width:50%" value="{$row_condition['condition_step_1']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Этап 2</label>
+                <input type="text" name="condition_step_2" id="condition_step_2" style="width:50%" value="{$row_condition['condition_step_2']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Этап 3</label>
+                <input type="text" name="condition_step_3" id="condition_step_3" style="width:50%" value="{$row_condition['condition_step_3']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Этап 4</label>
+                <input type="text" name="condition_step_4" id="condition_step_4" style="width:50%" value="{$row_condition['condition_step_4']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Этап 5</label>
+                <input type="text" name="condition_step_5" id="condition_step_5" style="width:50%" value="{$row_condition['condition_step_5']}">
+            </div>
+            
+            
+            <br>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 1 (заголовок)</label>
+                <input type="text" name="condition_block_name_1" id="condition_block_name_1" style="width:50%" value="{$row_condition['condition_block_name_1']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 1 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_1" id="condition_block_text_1">{$row_condition['condition_block_text_1']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_1' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 2 (заголовок)</label>
+                <input type="text" name="condition_block_name_2" id="condition_block_name_2" style="width:50%" value="{$row_condition['condition_block_name_2']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 2 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_2" id="condition_block_text_2">{$row_condition['condition_block_text_2']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_2' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 3 (заголовок)</label>
+                <input type="text" name="condition_block_name_3" id="condition_block_name_3" style="width:50%" value="{$row_condition['condition_block_name_3']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 3 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_3" id="condition_block_text_3">{$row_condition['condition_block_text_3']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_3' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 4 (заголовок)</label>
+                <input type="text" name="condition_block_name_4" id="condition_block_name_4" style="width:50%" value="{$row_condition['condition_block_name_4']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 4 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_4" id="condition_block_text_4">{$row_condition['condition_block_text_4']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_4' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 5 (заголовок)</label>
+                <input type="text" name="condition_block_name_5" id="condition_block_name_5" style="width:50%" value="{$row_condition['condition_block_name_5']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 5 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_5" id="condition_block_text_5">{$row_condition['condition_block_text_5']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_5' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 6 (заголовок)</label>
+                <input type="text" name="condition_block_name_6" id="condition_block_name_6" style="width:50%" value="{$row_condition['condition_block_name_6']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 6 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_6" id="condition_block_text_6">{$row_condition['condition_block_text_6']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_6' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 7 (заголовок)</label>
+                <input type="text" name="condition_block_name_7" id="condition_block_name_7" style="width:50%" value="{$row_condition['condition_block_name_7']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 7 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_7" id="condition_block_text_7">{$row_condition['condition_block_text_7']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_7' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 8 (заголовок)</label>
+                <input type="text" name="condition_block_name_8" id="condition_block_name_8" style="width:50%" value="{$row_condition['condition_block_name_8']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 8 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_8" id="condition_block_text_8">{$row_condition['condition_block_text_8']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_8' );
+                </script>
+            </div>
+            
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 9 (заголовок)</label>
+                <input type="text" name="condition_block_name_9" id="condition_block_name_9" style="width:50%" value="{$row_condition['condition_block_name_9']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 9 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_9" id="condition_block_text_9">{$row_condition['condition_block_text_9']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_9' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 10 (заголовок)</label>
+                <input type="text" name="condition_block_name_10" id="condition_block_name_10" style="width:50%" value="{$row_condition['condition_block_name_10']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 10 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_10" id="condition_block_text_10">{$row_condition['condition_block_text_10']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_10' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 11 (заголовок)</label>
+                <input type="text" name="condition_block_name_11" id="condition_block_name_11" style="width:50%" value="{$row_condition['condition_block_name_11']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 11 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_11" id="condition_block_text_11">{$row_condition['condition_block_text_11']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_11' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 12 (заголовок)</label>
+                <input type="text" name="condition_block_name_12" id="condition_block_name_12" style="width:50%" value="{$row_condition['condition_block_name_12']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 12 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_12" id="condition_block_text_12">{$row_condition['condition_block_text_12']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_12' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 13 (заголовок)</label>
+                <input type="text" name="condition_block_name_13" id="condition_block_name_13" style="width:50%" value="{$row_condition['condition_block_name_13']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 13 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_13" id="condition_block_text_13">{$row_condition['condition_block_text_13']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_13' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 14 (заголовок)</label>
+                <input type="text" name="condition_block_name_14" id="condition_block_name_14" style="width:50%" value="{$row_condition['condition_block_name_14']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 14 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_14" id="condition_block_text_14">{$row_condition['condition_block_text_14']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_14' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 15 (заголовок)</label>
+                <input type="text" name="condition_block_name_15" id="condition_block_name_15" style="width:50%" value="{$row_condition['condition_block_name_15']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 15 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_15" id="condition_block_text_15">{$row_condition['condition_block_text_15']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_15' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 16 (заголовок)</label>
+                <input type="text" name="condition_block_name_16" id="condition_block_name_16" style="width:50%" value="{$row_condition['condition_block_name_16']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 16 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_16" id="condition_block_text_16">{$row_condition['condition_block_text_16']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_16' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 17 (заголовок)</label>
+                <input type="text" name="condition_block_name_17" id="condition_block_name_17" style="width:50%" value="{$row_condition['condition_block_name_17']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 17 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_17" id="condition_block_text_17">{$row_condition['condition_block_text_17']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_17' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 18 (заголовок)</label>
+                <input type="text" name="condition_block_name_18" id="condition_block_name_18" style="width:50%" value="{$row_condition['condition_block_name_18']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 18 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_18" id="condition_block_text_18">{$row_condition['condition_block_text_18']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_18' );
+                </script>
+            </div>
+            
+         </fieldset>
+         
+         
 		<div class="form-group">
 		  <label class="control-label col-lg-2">{$lang['static_skin']}</label>
 		  <div class="col-lg-10">
@@ -736,6 +1226,22 @@ HTML;
 	$db->query( "UPDATE " . PREFIX . "_static_files SET static_id='{$row}' WHERE author = '{$member_id['name']}' AND static_id = '0'" );
 
 	$db->query( "INSERT INTO " . USERPREFIX . "_admin_logs (name, date, ip, action, extras) values ('".$db->safesql($member_id['name'])."', '{$_TIME}', '{$_IP}', '59', '{$name}')" );
+    
+    if($tpl == "condition") {
+         $st_id = $db->super_query( "SELECT id FROM " . PREFIX . "_static ORDER BY id DESC Limit 1" );
+        $id = $st_id['id'];
+                $query = "INSERT INTO " . PREFIX . "_static_condition ";
+                $keys = array(0 => "static_id");
+                $values = array(0 => $id);
+                foreach($_POST as $key => $value) {
+                    if(stristr($key, "condition_")) {
+                        $keys[] = $key;
+                        $values[] = "'".str_replace("'", '"', $value)."'";
+                    }
+                }
+                $query .= "(".implode(",", $keys).") values (".implode(",", $values).")";
+                $db->query($query);
+            }
 	
 	msg( "info", $lang['static_addok'], $lang['static_addok_1'], "?mod=static" );
 
@@ -758,6 +1264,7 @@ HTML;
 	} else {
 		
 		$row = $db->super_query( "SELECT * FROM " . PREFIX . "_static where id='$id'" );
+        $row_condition = $db->super_query( "SELECT * FROM " . PREFIX . "_static_condition where static_id='$id'" );
 	}
 
 	if ($row['allow_br'] == 2) {
@@ -976,7 +1483,10 @@ HTML;
 	
 	}
 	
-	
+    $static_selected = ($row['tpl'] == "") ? " selected='selected'" : "";
+    $condition_selected = ($row['tpl'] == "condition") ? " selected='selected'" : "";
+    $nam_doveryut_selected = ($row['tpl'] == "nam_doveryut") ? " selected='selected'" : "";
+	$condition_block = ($row['tpl'] == "condition") ? " style='display:block'" : "";
 	echo <<<HTML
 		  </div>
 		 </div>
@@ -1015,9 +1525,493 @@ HTML;
 		<div class="form-group">
 		  <label class="control-label col-lg-2">{$lang['static_tpl']}</label>
 		  <div class="col-lg-10">
-			<input type="text" name="static_tpl" size="20" value="{$row['tpl']}">.tpl&nbsp;<span class="help-button" data-rel="popover" data-html="true" data-trigger="hover" data-placement="right" data-content="{$lang['hint_stpl']}" >?</span>
+             <select name="static_tpl" id="static_tpl_select">
+                <option value=""{$static_selected}>static</option>
+                <option value="condition"{$condition_selected}>condition</option>
+                <option value="nam_doveryut"{$nam_doveryut_selected}>nam_doveryut</option>
+            </select>.tpl&nbsp;<span class="help-button" data-rel="popover" data-html="true" data-trigger="hover" data-placement="right" data-content="{$lang['hint_stpl']}" >?</span>
 		  </div>
 		 </div>
+         <fieldset class="condition_block"{$condition_block}>
+            <h3>Настройки шаблона condition</h2>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Заголовок преимуществ</label>
+                <input type="text" name="condition_name_preim" id="condition_name_preim" style="width:50%" value="{$row_condition['condition_name_preim']}">
+            </div>
+            <br>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Преимущество 1</label>
+                <input type="text" name="condition_preim_1" id="condition_preim_1" style="width:50%" value="{$row_condition['condition_preim_1']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Преимущество 2</label>
+                <input type="text" name="condition_preim_2" id="condition_preim_2" style="width:50%" value="{$row_condition['condition_preim_2']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Преимущество 3</label>
+                <input type="text" name="condition_preim_3" id="condition_preim_3" style="width:50%" value="{$row_condition['condition_preim_3']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Преимущество 4</label>
+                <input type="text" name="condition_preim_4" id="condition_preim_4" style="width:50%" value="{$row_condition['condition_preim_4']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Преимущество 5</label>
+                <input type="text" name="condition_preim_5" id="condition_preim_5" style="width:50%" value="{$row_condition['condition_preim_5']}">
+            </div>
+             <div class="form-group">
+                <label class="control-label col-lg-2">Преимущество 6</label>
+                <input type="text" name="condition_preim_6" id="condition_preim_6" style="width:50%" value="{$row_condition['condition_preim_6']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Преимущество 7</label>
+                <input type="text" name="condition_preim_7" id="condition_preim_7" style="width:50%" value="{$row_condition['condition_preim_7']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Преимущество 8</label>
+                <input type="text" name="condition_preim_8" id="condition_preim_8" style="width:50%" value="{$row_condition['condition_preim_8']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Преимущество 9</label>
+                <input type="text" name="condition_preim_9" id="condition_preim_9" style="width:50%" value="{$row_condition['condition_preim_9']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Преимущество 10</label>
+                <input type="text" name="condition_preim_10" id="condition_preim_10" style="width:50%" value="{$row_condition['condition_preim_10']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Текст преимуществ 1</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_under_preim_1" id="condition_under_preim_1">{$row_condition['condition_under_preim_1']}</textarea>
+                <script src="/engine/skins/ckeditor/ckeditor.js"></script>
+                <script>
+                    CKEDITOR.replace( 'condition_under_preim_1' );
+                </script>
+            </div>
+             <div class="form-group">
+                <label class="control-label col-lg-2">Текст преимуществ 2</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_under_preim_2" id="condition_under_preim_2">{$row_condition['condition_under_preim_2']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_under_preim_2' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Цена под преимуществами</label>
+                <input type="text" name="condition_under_preim_price" id="condition_under_preim_price" style="width:50%" value="{$row_condition['condition_under_preim_price']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под преимуществами 1 (текст)</label>
+                <input type="text" name="condition_icon_under_preim_text_1" id="condition_icon_under_preim_text_1" style="width:50%" value="{$row_condition['condition_icon_under_preim_text_1']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под преимуществами 1 (alt к иконке)</label>
+                <input type="text" name="condition_icon_under_preim_alt_1" id="condition_icon_under_preim_alt_1" style="width:50%" value="{$row_condition['condition_icon_under_preim_alt_1']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под преимуществами 2 (текст)</label>
+                <input type="text" name="condition_icon_under_preim_text_2" id="condition_icon_under_preim_text_2" style="width:50%" value="{$row_condition['condition_icon_under_preim_text_2']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под преимуществами 2 (alt к иконке)</label>
+                <input type="text" name="condition_icon_under_preim_alt_2" id="condition_icon_under_preim_alt_2" style="width:50%" value="{$row_condition['condition_icon_under_preim_alt_2']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под преимуществами 3 (текст)</label>
+                <input type="text" name="condition_icon_under_preim_text_3" id="condition_icon_under_preim_text_3" style="width:50%" value="{$row_condition['condition_icon_under_preim_text_3']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под преимуществами 3 (alt к иконке)</label>
+                <input type="text" name="condition_icon_under_preim_alt_3" id="condition_icon_under_preim_alt_3" style="width:50%" value="{$row_condition['condition_icon_under_preim_alt_3']}">
+            </div>
+            
+            
+            
+            <div class="form-group">
+                <label class="control-label col-lg-2">Заголовок поломок</label>
+                <input type="text" name="condition_name_polomki" id="condition_name_polomki" style="width:50%" value="{$row_condition['condition_name_polomki']}">
+            </div>
+            <br>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Поломка 1</label>
+                <input type="text" name="condition_polomki_1" id="condition_polomki_1" style="width:50%" value="{$row_condition['condition_polomki_1']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Поломка 2</label>
+                <input type="text" name="condition_polomki_2" id="condition_polomki_2" style="width:50%" value="{$row_condition['condition_polomki_2']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Поломка 3</label>
+                <input type="text" name="condition_polomki_3" id="condition_polomki_3" style="width:50%" value="{$row_condition['condition_polomki_3']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Поломка 4</label>
+                <input type="text" name="condition_polomki_4" id="condition_polomki_4" style="width:50%" value="{$row_condition['condition_polomki_4']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Поломка 5</label>
+                <input type="text" name="condition_polomki_5" id="condition_polomki_5" style="width:50%" value="{$row_condition['condition_polomki_5']}">
+            </div>
+            
+            <div class="form-group">
+                <label class="control-label col-lg-2">Поломка 6</label>
+                <input type="text" name="condition_polomki_6" id="condition_polomki_6" style="width:50%" value="{$row_condition['condition_polomki_6']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Поломка 7</label>
+                <input type="text" name="condition_polomki_7" id="condition_polomki_7" style="width:50%" value="{$row_condition['condition_polomki_7']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Поломка 8</label>
+                <input type="text" name="condition_polomki_8" id="condition_polomki_8" style="width:50%" value="{$row_condition['condition_polomki_8']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Поломка 9</label>
+                <input type="text" name="condition_polomki_9" id="condition_polomki_9" style="width:50%" value="{$row_condition['condition_polomki_9']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Поломка 10</label>
+                <input type="text" name="condition_polomki_10" id="condition_polomki_10" style="width:50%" value="{$row_condition['condition_polomki_10']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Текст поломок</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_under_polomki_1" id="condition_under_polomki_1">{$row_condition['condition_under_polomki_1']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_under_polomki_1' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под поломками 1 (текст)</label>
+                <input type="text" name="condition_icon_under_polomki_text_1" id="condition_icon_under_polomki_text_1" style="width:50%" value="{$row_condition['condition_icon_under_polomki_text_1']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под поломками 1 (alt к иконке)</label>
+                <input type="text" name="condition_icon_under_polomki_alt_1" id="condition_icon_under_polomki_alt_1" style="width:50%" value="{$row_condition['condition_icon_under_polomki_alt_1']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под поломками 2 (текст)</label>
+                <input type="text" name="condition_icon_under_polomki_text_2" id="condition_icon_under_polomki_text_2" style="width:50%" value="{$row_condition['condition_icon_under_polomki_text_2']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под поломками 2 (alt к иконке)</label>
+                <input type="text" name="condition_icon_under_polomki_alt_2" id="condition_icon_under_polomki_alt_2" style="width:50%" value="{$row_condition['condition_icon_under_polomki_alt_2']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под поломками 3 (текст)</label>
+                <input type="text" name="condition_icon_under_polomki_text_3" id="condition_icon_under_polomki_text_3" style="width:50%" value="{$row_condition['condition_icon_under_polomki_text_3']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Иконка под поломками 3 (alt к иконке)</label>
+                <input type="text" name="condition_icon_under_polomki_alt_3" id="condition_icon_under_polomki_alt_3" style="width:50%" value="{$row_condition['condition_icon_under_polomki_alt_3']}">
+            </div>
+            
+            
+            
+            <br>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Заголовок ремонта</label>
+                <input type="text" name="condition_name_remont" id="condition_name_remont" style="width:50%" value="{$row_condition['condition_name_remont']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Таблица ремонта</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_table_remont" id="condition_table_remont">{$row_condition['condition_table_remont']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_table_remont' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Подпись под таблицей ремонта</label>
+                <input type="text" name="condition_table_remont_podpis" id="condition_table_remont_podpis" style="width:50%" value="{$row_condition['condition_table_remont_podpis']}">
+            </div>
+            
+            <br>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Заголовок списка работ</label>
+                <input type="text" name="condition_work_list_name" id="condition_work_list_name" style="width:50%" value="{$row_condition['condition_work_list_name']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Работа 1</label>
+                <input type="text" name="condition_work_list_1" id="condition_work_list_1" style="width:50%" value="{$row_condition['condition_work_list_1']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Работа 2</label>
+                <input type="text" name="condition_work_list_2" id="condition_work_list_2" style="width:50%" value="{$row_condition['condition_work_list_2']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Работа 3</label>
+                <input type="text" name="condition_work_list_3" id="condition_work_list_3" style="width:50%" value="{$row_condition['condition_work_list_3']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Работа 4</label>
+                <input type="text" name="condition_work_list_4" id="condition_work_list_4" style="width:50%" value="{$row_condition['condition_work_list_4']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Работа 5</label>
+                <input type="text" name="condition_work_list_5" id="condition_work_list_5" style="width:50%" value="{$row_condition['condition_work_list_5']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Работа 6</label>
+                <input type="text" name="condition_work_list_6" id="condition_work_list_6" style="width:50%" value="{$row_condition['condition_work_list_6']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Работа 7</label>
+                <input type="text" name="condition_work_list_7" id="condition_work_list_7" style="width:50%" value="{$row_condition['condition_work_list_7']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Работа 8</label>
+                <input type="text" name="condition_work_list_8" id="condition_work_list_8" style="width:50%" value="{$row_condition['condition_work_list_8']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Работа 9</label>
+                <input type="text" name="condition_work_list_9" id="condition_work_list_9" style="width:50%" value="{$row_condition['condition_work_list_9']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Работа 10</label>
+                <input type="text" name="condition_work_list_10" id="condition_work_list_10" style="width:50%" value="{$row_condition['condition_work_list_10']}">
+            </div>
+            
+            <br>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Заголовок обслуживания</label>
+                <input type="text" name="condition_name_service" id="condition_name_service" style="width:50%" value="{$row_condition['condition_name_service']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Таблица обслуживания</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_table_service" id="condition_table_service">{$row_condition['condition_table_service']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_table_service' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Подпись под таблицей обслуживания</label>
+                <input type="text" name="condition_table_service_podpis" id="condition_table_service_podpis" style="width:50%" value="{$row_condition['condition_table_service_podpis']}">
+            </div>
+            
+            <br>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Заголовок процесса работы</label>
+                <input type="text" name="condition_name_steps" id="condition_name_steps" style="width:50%" value="{$row_condition['condition_name_steps']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Этап 1</label>
+                <input type="text" name="condition_step_1" id="condition_step_1" style="width:50%" value="{$row_condition['condition_step_1']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Этап 2</label>
+                <input type="text" name="condition_step_2" id="condition_step_2" style="width:50%" value="{$row_condition['condition_step_2']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Этап 3</label>
+                <input type="text" name="condition_step_3" id="condition_step_3" style="width:50%" value="{$row_condition['condition_step_3']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Этап 4</label>
+                <input type="text" name="condition_step_4" id="condition_step_4" style="width:50%" value="{$row_condition['condition_step_4']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Этап 5</label>
+                <input type="text" name="condition_step_5" id="condition_step_5" style="width:50%" value="{$row_condition['condition_step_5']}">
+            </div>
+            
+            
+            <br>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 1 (заголовок)</label>
+                <input type="text" name="condition_block_name_1" id="condition_block_name_1" style="width:50%" value="{$row_condition['condition_block_name_1']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 1 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_1" id="condition_block_text_1">{$row_condition['condition_block_text_1']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_1' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 2 (заголовок)</label>
+                <input type="text" name="condition_block_name_2" id="condition_block_name_2" style="width:50%" value="{$row_condition['condition_block_name_2']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 2 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_2" id="condition_block_text_2">{$row_condition['condition_block_text_2']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_2' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 3 (заголовок)</label>
+                <input type="text" name="condition_block_name_3" id="condition_block_name_3" style="width:50%" value="{$row_condition['condition_block_name_3']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 3 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_3" id="condition_block_text_3">{$row_condition['condition_block_text_3']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_3' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 4 (заголовок)</label>
+                <input type="text" name="condition_block_name_4" id="condition_block_name_4" style="width:50%" value="{$row_condition['condition_block_name_4']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 4 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_4" id="condition_block_text_4">{$row_condition['condition_block_text_4']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_4' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 5 (заголовок)</label>
+                <input type="text" name="condition_block_name_5" id="condition_block_name_5" style="width:50%" value="{$row_condition['condition_block_name_5']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 5 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_5" id="condition_block_text_5">{$row_condition['condition_block_text_5']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_5' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 6 (заголовок)</label>
+                <input type="text" name="condition_block_name_6" id="condition_block_name_6" style="width:50%" value="{$row_condition['condition_block_name_6']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 6 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_6" id="condition_block_text_6">{$row_condition['condition_block_text_6']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_6' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 7 (заголовок)</label>
+                <input type="text" name="condition_block_name_7" id="condition_block_name_7" style="width:50%" value="{$row_condition['condition_block_name_7']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 7 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_7" id="condition_block_text_7">{$row_condition['condition_block_text_7']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_7' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 8 (заголовок)</label>
+                <input type="text" name="condition_block_name_8" id="condition_block_name_8" style="width:50%" value="{$row_condition['condition_block_name_8']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 8 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_8" id="condition_block_text_8">{$row_condition['condition_block_text_8']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_8' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 9 (заголовок)</label>
+                <input type="text" name="condition_block_name_9" id="condition_block_name_9" style="width:50%" value="{$row_condition['condition_block_name_9']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 9 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_9" id="condition_block_text_9">{$row_condition['condition_block_text_9']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_9' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 10 (заголовок)</label>
+                <input type="text" name="condition_block_name_10" id="condition_block_name_10" style="width:50%" value="{$row_condition['condition_block_name_10']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 10 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_10" id="condition_block_text_10">{$row_condition['condition_block_text_10']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_10' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 11 (заголовок)</label>
+                <input type="text" name="condition_block_name_11" id="condition_block_name_11" style="width:50%" value="{$row_condition['condition_block_name_11']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 11 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_11" id="condition_block_text_11">{$row_condition['condition_block_text_11']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_11' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 12 (заголовок)</label>
+                <input type="text" name="condition_block_name_12" id="condition_block_name_12" style="width:50%" value="{$row_condition['condition_block_name_12']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 12 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_12" id="condition_block_text_12">{$row_condition['condition_block_text_12']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_12' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 13 (заголовок)</label>
+                <input type="text" name="condition_block_name_13" id="condition_block_name_13" style="width:50%" value="{$row_condition['condition_block_name_13']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 13 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_13" id="condition_block_text_13">{$row_condition['condition_block_text_13']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_13' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 14 (заголовок)</label>
+                <input type="text" name="condition_block_name_14" id="condition_block_name_14" style="width:50%" value="{$row_condition['condition_block_name_14']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 14 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_14" id="condition_block_text_14">{$row_condition['condition_block_text_14']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_14' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 15 (заголовок)</label>
+                <input type="text" name="condition_block_name_15" id="condition_block_name_15" style="width:50%" value="{$row_condition['condition_block_name_15']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 15 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_15" id="condition_block_text_15">{$row_condition['condition_block_text_15']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_15' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 16 (заголовок)</label>
+                <input type="text" name="condition_block_name_16" id="condition_block_name_16" style="width:50%" value="{$row_condition['condition_block_name_16']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 16 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_16" id="condition_block_text_16">{$row_condition['condition_block_text_16']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_16' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 17 (заголовок)</label>
+                <input type="text" name="condition_block_name_17" id="condition_block_name_17" style="width:50%" value="{$row_condition['condition_block_name_17']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 17 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_17" id="condition_block_text_17">{$row_condition['condition_block_text_17']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_17' );
+                </script>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 18 (заголовок)</label>
+                <input type="text" name="condition_block_name_18" id="condition_block_name_18" style="width:50%" value="{$row_condition['condition_block_name_18']}">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Нижний блок 18 (текст)</label><br><br>
+                <textarea style="width:100%;max-width: 950px;height:350px;" name="condition_block_text_18" id="condition_block_text_18">{$row_condition['condition_block_text_18']}</textarea>
+                <script>
+                    CKEDITOR.replace( 'condition_block_text_18' );
+                </script>
+            </div>
+         </fieldset>
 HTML;
 	
 	if( $_GET['page'] != "rules" ) echo <<<HTML
@@ -1155,6 +2149,7 @@ HTML;
 			$db->query( "UPDATE " . PREFIX . "_static SET descr='$descr', template='$template', allow_br='$allow_br', allow_template='$allow_template', grouplevel='all', tpl='$tpl', metadescr='{$metatags['description']}', metakeys='{$metatags['keywords']}', template_folder='{$skin_name}', date='{$thistime}', metatitle='{$metatags['title']}', allow_count='{$allow_count}', sitemap='0', disable_index='0' WHERE name='dle-rules-page'" );
 
 			$db->query( "INSERT INTO " . USERPREFIX . "_admin_logs (name, date, ip, action, extras) values ('".$db->safesql($member_id['name'])."', '{$_TIME}', '{$_IP}', '60', 'dle-rules-page')" );
+
 		
 		} else {
 			
@@ -1180,6 +2175,25 @@ HTML;
 
 		$db->query( "INSERT INTO " . USERPREFIX . "_admin_logs (name, date, ip, action, extras) values ('".$db->safesql($member_id['name'])."', '{$_TIME}', '{$_IP}', '60', '{$name}')" );
 		
+        
+                    
+            if($tpl == "condition") {
+                $db->query("DELETE FROM " . PREFIX . "_static_condition WHERE static_id = ".$id);
+                $query = "INSERT INTO " . PREFIX . "_static_condition ";
+                $keys = array(0 => "static_id");
+                $values = array(0 => $id);
+                foreach($_POST as $key => $value) {
+                    if(stristr($key, "condition_")) {
+                        $keys[] = $key;
+                        $values[] = "'".str_replace("'", '"', $value)."'";
+                    }
+                }
+                $query .= "(".implode(",", $keys).") values (".implode(",", $values).")";
+                $db->query($query);
+            }
+            
+        
+        
 		msg( "info", $lang['static_addok'], $lang['static_addok_1'], "?mod=static" );
 	
 	}
@@ -1197,6 +2211,7 @@ HTML;
 	$id = intval( $_GET['id'] );
 	
 	$db->query( "DELETE FROM " . PREFIX . "_static WHERE id='$id'" );
+
 	
 	$db->query( "SELECT name, onserver FROM " . PREFIX . "_static_files WHERE static_id = '$id'" );
 	

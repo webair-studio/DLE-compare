@@ -14,7 +14,21 @@
  Назначение: Главная страница
 =====================================================
 */
+if(stristr($_SERVER['HTTP_REFERER'], "yabs.yandex.ru")) {
 
+	session_start();
+	$_SESSION['direct_flag'] = "true";
+}
+if(stristr($_SERVER["REQUEST_URI"], "?")) {
+	$uri = $_SERVER["REQUEST_URI"];
+	$uri_parse = explode("?", $uri);
+	if(strlen($uri_parse[1]) > 0) {
+		header("HTTP/1.1 301 Moved Permanently"); 
+		header("Location: ".$uri_parse[0]); 
+	}
+}
+echo "<!--".print_r($_SESSION,true)."-->";
+//echo '<script>console.log(812)</script>';
 @ob_start ();
 @ob_implicit_flush ( 0 );
 
@@ -32,6 +46,7 @@ if( !defined( 'E_DEPRECATED' ) ) {
 
 @ini_set ( 'display_errors', true );
 @ini_set ( 'html_errors', false );
+@ini_set ( 'upload_max_filesize', '10M' );
 
 define ( 'DATALIFEENGINE', true );
 define ( 'ROOT_DIR', dirname ( __FILE__ ) );

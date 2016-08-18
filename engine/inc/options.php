@@ -851,6 +851,11 @@ HTML;
 	
 	showRow( $lang['opt_sys_ht'], $lang['opt_sys_htd'], "<input type=text style=\"width:100%;\" name=\"save_con[home_title]\" value=\"{$config['home_title']}\">", "white-line" );
 	showRow( $lang['opt_sys_hu'], $lang['opt_sys_hud'], "<input type=text style=\"width:100%;\" name=\"save_con[http_home_url]\" value=\"{$config['http_home_url']}\">" );
+    
+    showRow( $lang['opt_sys_phone_1'], $lang['opt_sys_phone_d'], "<input type=text style=\"width:100%;\" name=\"save_con[opt_sys_phone_1]\" value=\"{$config['opt_sys_phone_1']}\">" );
+    showRow( $lang['opt_sys_phone_timetable_1'], '', "<input type=text style=\"width:100%;\" name=\"save_con[opt_sys_phone_timetable_1]\" value=\"{$config['opt_sys_phone_timetable_1']}\">" );
+    showRow( $lang['opt_sys_phone_2'], $lang['opt_sys_phone_d'], "<input type=text style=\"width:100%;\" name=\"save_con[opt_sys_phone_2]\" value=\"{$config['opt_sys_phone_2']}\">" );
+    showRow( $lang['opt_sys_phone_timetable_2'], '', "<input type=text style=\"width:100%;\" name=\"save_con[opt_sys_phone_timetable_2]\" value=\"{$config['opt_sys_phone_timetable_2']}\">" );
 	showRow( $lang['opt_sys_chars'], $lang['opt_sys_charsd'], "<input type=\"text\" style=\"width:100%;\" name=\"save_con[charset]\" value=\"{$config['charset']}\">" );
 	showRow( $lang['opt_sys_descr'], $lang['opt_sys_descrd'], "<input type=\"text\" style=\"width:100%;\" name=\"save_con[description]\" value=\"{$config['description']}\">" );
 	showRow( $lang['opt_sys_key'], $lang['opt_sys_keyd'], "<textarea style=\"width:100%;height:100px;\" name=\"save_con[keywords]\">{$config['keywords']}</textarea>" );

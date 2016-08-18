@@ -199,6 +199,13 @@ if ($is_loged_in) {
 											'mod' => "static",
 											'access' => $user_group[$member_id['user_group']]['admin_static'] 
 								), 
+                                
+                                array (
+											'name' => $lang['opt_editstaticprice'], 
+											'url' => "$PHP_SELF?mod=editstaticprice", 
+											'mod' => "editstaticprice",
+											'access' => $user_group[$member_id['user_group']]['admin_static'] 
+								), 
 								
 								array (
 											'name' => $lang['opt_clean'], 

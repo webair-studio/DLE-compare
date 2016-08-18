@@ -85,11 +85,11 @@ if ($_POST['action'] == "create") {
 		}
 
 
-	    $handler = fopen(ROOT_DIR. "/uploads/sitemap.xml", "wb+");
+	    $handler = fopen(ROOT_DIR. "/sitemap.xml", "wb+");
 	    fwrite($handler, $sitemap);
 	    fclose($handler);
 	
-		@chmod(ROOT_DIR. "/uploads/sitemap.xml", 0666);
+		@chmod(ROOT_DIR. "/sitemap.xml", 0666);
 
 		$sitemap = $map->build_stat();
 
@@ -107,11 +107,11 @@ if ($_POST['action'] == "create") {
 
 		}
 
-	    $handler = fopen(ROOT_DIR. "/uploads/sitemap1.xml", "wb+");
+	    $handler = fopen(ROOT_DIR. "/sitemap1.xml", "wb+");
 	    fwrite($handler, $sitemap);
 	    fclose($handler);
 	
-		@chmod(ROOT_DIR. "/uploads/sitemap1.xml", 0666);
+		@chmod(ROOT_DIR. "/sitemap1.xml", 0666);
 
 		for ($i =0; $i < $pages_count; $i++) {
 
@@ -134,11 +134,11 @@ if ($_POST['action'] == "create") {
 			}
 
 
-		    $handler = fopen(ROOT_DIR. "/uploads/sitemap{$t}.xml", "wb+");
+		    $handler = fopen(ROOT_DIR. "/sitemap{$t}.xml", "wb+");
 		    fwrite($handler, $sitemap);
 		    fclose($handler);
 		
-			@chmod(ROOT_DIR. "/uploads/sitemap{$t}.xml", 0666);
+			@chmod(ROOT_DIR. "/sitemap{$t}.xml", 0666);
 
 		}
 
@@ -160,11 +160,11 @@ if ($_POST['action'] == "create") {
 			}
 		}
 	
-	    $handler = fopen(ROOT_DIR. "/uploads/sitemap.xml", "wb+");
+	    $handler = fopen(ROOT_DIR. "/sitemap.xml", "wb+");
 	    fwrite($handler, $sitemap);
 	    fclose($handler);
 	
-		@chmod(ROOT_DIR. "/uploads/sitemap.xml", 0666);
+		@chmod(ROOT_DIR. "/sitemap.xml", 0666);
 	}
 
 	if(defined('AUTOMODE')) {
@@ -175,7 +175,7 @@ if ($_POST['action'] == "create") {
 		
 		} else {
 		
-			$map_link = $config['http_home_url']."uploads/sitemap.xml";
+			$map_link = $config['http_home_url']."sitemap.xml";
 		
 		}
 
@@ -207,13 +207,13 @@ echo <<<HTML
 	<div class="row box-section">
 HTML;
 
-	if(!@file_exists(ROOT_DIR. "/uploads/sitemap.xml")){ 
+	if(!@file_exists(ROOT_DIR. "/sitemap.xml")){ 
 
 		echo $lang['no_google_map'];
 
 	} else {
 
-		$file_date = date("d.m.Y H:i", filectime(ROOT_DIR. "/uploads/sitemap.xml") );
+		$file_date = date("d.m.Y H:i", filectime(ROOT_DIR. "/sitemap.xml") );
 
 		echo "<b>".$file_date."</b> ".$lang['google_map_info'];
 
@@ -225,9 +225,9 @@ HTML;
 
 		} else {
 
-			$map_link = $config['http_home_url']."uploads/sitemap.xml";
+			$map_link = $config['http_home_url']."sitemap.xml";
 
-			echo " <a class=\"list\" href=\"".$map_link."\" target=\"_blank\">".$config['http_home_url']."uploads/sitemap.xml</a>";
+			echo " <a class=\"list\" href=\"".$map_link."\" target=\"_blank\">".$config['http_home_url']."sitemap.xml</a>";
 
 		}
 

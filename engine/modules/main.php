@@ -370,7 +370,165 @@ if( $_SERVER['QUERY_STRING'] AND !$tpl->result['content'] AND !$tpl->result['inf
 $tpl->set ( '{headers}', $metatags."\n".$js_array );
 $tpl->set ( '{AJAX}', $ajax );
 $tpl->set ( '{info}',  $tpl->result['info'] );
+
+
+
+$larr = array(
+"/ventilyaciya.html",
+"/proektirovanie-ventilyacii.html",
+"/montazh-ventilyacii.html",
+"/obsledovanie-ventilyacii.html",
+"/diagnostika-ventilyacii.html",
+"/remont-ventilyacii.html",
+"/chistka-ventilyacii.html",
+"/dezinfekciya-ventilyacii.html",
+"/obsluzhivanie-ventilyacii.html",
+"/servis-ventilyacii.html",
+"/vozduhovody.html",
+"/proektirovanie-vozduhovodov.html",
+"/montazh-vozduhovodov.html",
+"/remont-vozduhovodov.html",
+"/chistka-vozduhovodov.html",
+"/dezinfekciya-vozduhovodov.html",
+"/musoroprovody.html",
+"/chistka-musoroprovodov.html",
+"/dezinfekciya-musoroprovodov.html",
+"/mojka-musoroprovodov.html"
+);
+
+if(in_array($_SERVER["REQUEST_URI"], $larr)) {
+	$tpl->set ( '{process}', "<!--Process-->
+            <div class='process pr'>
+                <span class='process-title'>Процесс работы</span>
+                <div class='process-wrap'>
+                    <!--start-->
+                    <div class='process-item six'>
+                        
+						<div class='cyrcle'>1</div>
+                        <span>
+                            Звонок/<br>Заявка
+                        </span>
+                    </div>
+                    <!--end-->
+                    <!--start-->
+                    <div class='process-item six'>
+                       
+						<div class='cyrcle'>2</div>
+                        <span>
+                            Выезд<br>инженера
+                        </span>
+                    </div>
+                    <!--end-->
+                    <!--start-->
+                    <div class='process-item six'>
+                       
+						<div class='cyrcle'>3</div>
+                        <span>
+                            Составление<br>сметы
+                        </span>
+                    </div>
+                    <!--end-->
+                    <!--start-->
+                    <div class='process-item six'>
+                       
+						<div class='cyrcle'>4</div>
+                        <span>
+                            Заключение<br>договора
+                        </span>
+                    </div>
+                    <!--end-->
+					 <!--start-->
+                    <div class='process-item six'>
+                       
+						<div class='cyrcle'>5</div>
+                        <span>
+                            Оплата
+                        </span>
+                    </div>
+                    <!--end-->
+					<!--start-->
+                    <div class='process-item six'>
+                       
+						<div class='cyrcle'>6</div>
+                        <span>
+                           Выполнение<br>работы
+                        </span>
+                    </div>
+                    <!--end-->
+                    <div class='clearfix'></div>
+                </div>
+            </div>");
+}
+else {
+$tpl->set ( '{process}', "<!--Process-->
+            <div class='process pr'>
+                <span class='process-title'>Процесс работы</span>
+                <div class='process-wrap'>
+                    <!--start-->
+                    <div class='process-item'>
+                        
+						<div class='cyrcle'>1</div>
+                        <span>
+                            Звонок/<br>Заявка
+                        </span>
+                    </div>
+                    <!--end-->
+                    <!--start-->
+                    <div class='process-item'>
+                       
+						<div class='cyrcle'>2</div>
+                        <span>
+                            Консультация
+                        </span>
+                    </div>
+                    <!--end-->
+                    <!--start-->
+                    <div class='process-item'>
+                       
+						<div class='cyrcle'>3</div>
+                        <span>
+                            Выезд<br>инженера
+                        </span>
+                    </div>
+                    <!--end-->
+                    <!--start-->
+                    <div class='process-item'>
+                       
+						<div class='cyrcle'>4</div>
+                        <span>
+                            Выполнение<br>работы
+                        </span>
+                    </div>
+                    <!--end-->
+					 <!--start-->
+                    <div class='process-item'>
+                       
+						<div class='cyrcle'>5</div>
+                        <span>
+                            Оплата<br>по факту
+                        </span>
+                    </div>
+                    <!--end-->
+                    <div class='clearfix'></div>
+                </div>
+            </div>");
+}
 $tpl->set ( '{content}', "<div id='dle-content'>" . $tpl->result['content'] . "</div>" );
+
+/* phones */
+$phone_1 = preg_replace("#^(.*)\((.*)\)(.*)#", "<span class='code'>$1 ($2)</span>$3", $config['opt_sys_phone_1']);
+$phone_tt_1 = preg_replace("#(\d)\:(\d\d)#", "$1<sup>$2</sup>", $config['opt_sys_phone_timetable_1']);
+if($config['opt_sys_phone_2']) {
+$phone_2 = preg_replace("#^(.*)\((.*)\)(.*)#", "<span class='code'>$1 ($2)</span>$3", $config['opt_sys_phone_2']);
+$phone_tt_2 = preg_replace("#(\d)\:(\d\d)#", "$1<sup>$2</sup>", $config['opt_sys_phone_timetable_2']);
+}
+else {
+    $phone_2 = $phone_tt_2 = "";
+}
+$tpl->set ( '{phone_1}', $phone_1);
+$tpl->set ( '{phone_tt_1}', $phone_tt_1);
+$tpl->set ( '{phone_2}', $phone_2);
+$tpl->set ( '{phone_tt_2}', $phone_tt_2);
 
 $tpl->compile ( 'main' );
 
@@ -382,7 +540,7 @@ if ($replace_url) $tpl->result['main'] = str_replace ( $replace_url[0]."/", $rep
 
 $tpl->result['main'] = str_replace ( '<img src="http://'.$_SERVER['HTTP_HOST'].'/', '<img src="/', $tpl->result['main'] );
 
-echo $tpl->result['main'];
+eval (' ?' . '>' . $tpl->result['main'] . '<' . '?php ');
 
 $tpl->global_clear();
 
