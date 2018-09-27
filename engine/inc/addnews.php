@@ -341,9 +341,15 @@ echo <<<HTML
 								  <div class="row">
 									<div class="col-md-12"><input class="icheck" type="checkbox" id="approve" name="approve" value="1" checked><label for="approve">{$lang['addnews_mod']}</label></div>
 								  </div>
+
+                                  <div class="row">
+									<div class="col-md-12"><input class="icheck" type="checkbox" id="approve_rss" name="approve_rss" value="1" checked><label for="approve_rss">Добавлять новость в Yandex RSS</label></div>
+								  </div>
+
+
 								  <div class="row">
 									<div class="col-md-3" style="max-width:300px;" >{$main_input}</div>
-									<div class="col-md-3" style="max-width:250px;"><input class="icheck" type="checkbox" id="allow_comm" name="allow_comm" value="1" checked><label for="allow_comm">{$lang['addnews_comm']}</label></div>
+									<div class="col-md-3" style="max-width:250px;"><input class="icheck" type="checkbox" id="allow_comm" name="allow_comm" value="1" ><label for="allow_comm">{$lang['addnews_comm']}</label></div>
 									<div class="col-md-6">{$disable_index}</div>
 								  </div>
 								  <div class="row">
@@ -516,6 +522,7 @@ elseif( $action == "doaddnews" ) {
 	
 	$allow_comm = isset( $_POST['allow_comm'] ) ? intval( $_POST['allow_comm'] ) : 0;
 	$approve = isset( $_POST['approve'] ) ? intval( $_POST['approve'] ) : 0;
+    $approve_rss = isset( $_POST['approve_rss'] ) ? intval( $_POST['approve_rss'] ) : 0;
 	$allow_rating = isset( $_POST['allow_rating'] ) ? intval( $_POST['allow_rating'] ) : 0;
 	$news_fixed = isset( $_POST['news_fixed'] ) ? intval( $_POST['news_fixed'] ) : 0;
 	$allow_br = isset( $_POST['allow_br'] ) ? intval( $_POST['allow_br'] ) : 0;
@@ -704,8 +711,8 @@ elseif( $action == "doaddnews" ) {
 	include (ENGINE_DIR . '/inc/xfields.php');
 
 	
-	$db->query( "INSERT INTO " . PREFIX . "_post (date, autor, short_story, full_story, xfields, title, descr, keywords, category, alt_name, allow_comm, approve, allow_main, fixed, allow_br, symbol, tags, metatitle) values ('$thistime', '{$author}', '$short_story', '$full_story', '$filecontents', '$title', '{$metatags['description']}', '{$metatags['keywords']}', '$category_list', '$alt_name', '$allow_comm', '$approve', '$allow_main', '$news_fixed', '$allow_br', '$catalog_url', '{$_POST['tags']}', '{$metatags['title']}')" );
-	
+	$db->query( "INSERT INTO " . PREFIX . "_post (date, autor, short_story, full_story, xfields, title, descr, keywords, category, alt_name, allow_comm, approve, allow_main, fixed, allow_br, symbol, tags, metatitle,approve_rss) values ('$thistime', '{$author}', '$short_story', '$full_story', '$filecontents', '$title', '{$metatags['description']}', '{$metatags['keywords']}', '$category_list', '$alt_name', '$allow_comm', '$approve', '$allow_main', '$news_fixed', '$allow_br', '$catalog_url', '{$_POST['tags']}', '{$metatags['title']}','$approve_rss')" );
+
 	$row = $db->insert_id();
 
 	$db->query( "INSERT INTO " . PREFIX . "_post_extras (news_id, allow_rate, votes, disable_index, access, user_id) VALUES('{$row}', '{$allow_rating}', '{$add_vote}', '{$disable_index}', '{$group_regel}', '{$userid}')" );

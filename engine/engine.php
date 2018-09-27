@@ -75,11 +75,18 @@ switch ( $do ) {
 		$_GET['page'] = "dle-rules-page";
 		include ENGINE_DIR . '/modules/static.php';
 		break;
-	
+
 	case "static" :
 		include ENGINE_DIR . '/modules/static.php';
 		break;
 	
+case "iphoto" :
+	include ENGINE_DIR . '/modules/iphoto.php';
+	break;
+
+case "board" :
+	include ENGINE_DIR . '/modules/board.php';
+	break;
 	case "alltags" :
 		include_once ENGINE_DIR . '/modules/tagscloud.php';
 		break;
@@ -250,7 +257,7 @@ switch ( $do ) {
 			
 			if ($view_template == "rss") {
 				
-				$sql_select = "SELECT id, autor, date, short_story, full_story, xfields, title, category, alt_name FROM " . PREFIX . "_post WHERE {$where_category} AND approve=1" . $where_date . " ORDER BY date DESC LIMIT 0," . $config['rss_number'];
+				$sql_select = "SELECT id, autor, date, short_story, full_story, xfields, title, category, alt_name FROM " . PREFIX . "_post WHERE {$where_category} AND approve=1 AND approve_rss=1"  . $where_date . " ORDER BY date DESC LIMIT 0," . $config['rss_number'];
 			
 			} else {
 				
@@ -551,8 +558,8 @@ switch ( $do ) {
 				if (isset ( $_SESSION['dle_sort_date'] )) $news_sort_by = $_SESSION['dle_sort_date'];
 				if (isset ( $_SESSION['dle_direction_date'] )) $news_direction_by = $_SESSION['dle_direction_date'];
 				
-				$sql_select = "SELECT p.id, p.autor, p.date, p.short_story, CHAR_LENGTH(p.full_story) as full_story, p.xfields, p.title, p.category, p.alt_name, p.comm_num, p.allow_comm, p.fixed, p.tags, e.news_read, e.allow_rate, e.rating, e.vote_num, e.votes, e.view_edit, e.editdate, e.editor, e.reason FROM " . PREFIX . "_post p LEFT JOIN " . PREFIX . "_post_extras e ON (p.id=e.news_id) WHERE {$stop_list}date >= '{$year}-01-01'AND date < '{$year}-01-01' + INTERVAL 1 YEAR AND approve=1" . $where_date . " ORDER BY " . $news_sort_by . " " . $news_direction_by . " LIMIT " . $cstart . "," . $config['news_number'];
-				$sql_count = "SELECT COUNT(*) as count FROM " . PREFIX . "_post where {$stop_list}date >= '{$year}-01-01'AND date < '{$year}-01-01' + INTERVAL 1 YEAR AND approve=1" . $where_date;
+				$sql_select = "SELECT p.id, p.autor, p.date, p.short_story, CHAR_LENGTH(p.full_story) as full_story, p.xfields, p.title, p.category, p.alt_name, p.comm_num, p.allow_comm, p.fixed, p.tags, e.news_read, e.allow_rate, e.rating, e.vote_num, e.votes, e.view_edit, e.editdate, e.editor, e.reason FROM " . PREFIX . "_post p LEFT JOIN " . PREFIX . "_post_extras e ON (p.id=e.news_id) WHERE category='10' AND  {$stop_list}date >= '{$year}-01-01'AND date < '{$year}-01-01' + INTERVAL 1 YEAR AND approve=1" . $where_date . " ORDER BY " . $news_sort_by . " " . $news_direction_by . " LIMIT " . $cstart . "," . $config['news_number'];
+				$sql_count = "SELECT COUNT(*) as count FROM " . PREFIX . "_post where category='10' AND  {$stop_list}date >= '{$year}-01-01'AND date < '{$year}-01-01' + INTERVAL 1 YEAR AND approve=1" . $where_date;
 			}
 			
 			// ################ Новости за месяц #################
@@ -574,8 +581,8 @@ switch ( $do ) {
 				if (isset ( $_SESSION['dle_sort_date'] )) $news_sort_by = $_SESSION['dle_sort_date'];
 				if (isset ( $_SESSION['dle_direction_date'] )) $news_direction_by = $_SESSION['dle_direction_date'];
 				
-				$sql_select = "SELECT p.id, p.autor, p.date, p.short_story, CHAR_LENGTH(p.full_story) as full_story, p.xfields, p.title, p.category, p.alt_name, p.comm_num, p.allow_comm, p.fixed, p.tags, e.news_read, e.allow_rate, e.rating, e.vote_num, e.votes, e.view_edit, e.editdate, e.editor, e.reason FROM " . PREFIX . "_post p LEFT JOIN " . PREFIX . "_post_extras e ON (p.id=e.news_id) WHERE {$stop_list}date >= '{$year}-{$month}-01'AND date < '{$year}-{$month}-01' + INTERVAL 1 MONTH AND approve=1" . $where_date . " ORDER BY " . $news_sort_by . " " . $news_direction_by . " LIMIT " . $cstart . "," . $config['news_number'];
-				$sql_count = "SELECT COUNT(*) as count FROM " . PREFIX . "_post where {$stop_list}date >= '{$year}-{$month}-01'AND date < '{$year}-{$month}-01' + INTERVAL 1 MONTH AND approve=1" . $where_date;
+				$sql_select = "SELECT p.id, p.autor, p.date, p.short_story, CHAR_LENGTH(p.full_story) as full_story, p.xfields, p.title, p.category, p.alt_name, p.comm_num, p.allow_comm, p.fixed, p.tags, e.news_read, e.allow_rate, e.rating, e.vote_num, e.votes, e.view_edit, e.editdate, e.editor, e.reason FROM " . PREFIX . "_post p LEFT JOIN " . PREFIX . "_post_extras e ON (p.id=e.news_id) WHERE category='10' AND {$stop_list}date >= '{$year}-{$month}-01'AND date < '{$year}-{$month}-01' + INTERVAL 1 MONTH AND approve=1" . $where_date . " ORDER BY " . $news_sort_by . " " . $news_direction_by . " LIMIT " . $cstart . "," . $config['news_number'];
+				$sql_count = "SELECT COUNT(*) as count FROM " . PREFIX . "_post category='10' AND where {$stop_list}date >= '{$year}-{$month}-01'AND date < '{$year}-{$month}-01' + INTERVAL 1 MONTH AND approve=1" . $where_date;
 			}
 		
 			// ################ Новости за день #################
@@ -604,8 +611,8 @@ switch ( $do ) {
 				if (isset ( $_SESSION['dle_sort_date'] )) $news_sort_by = $_SESSION['dle_sort_date'];
 				if (isset ( $_SESSION['dle_direction_date'] )) $news_direction_by = $_SESSION['dle_direction_date'];
 				
-				$sql_select = "SELECT p.id, p.autor, p.date, p.short_story, CHAR_LENGTH(p.full_story) as full_story, p.xfields, p.title, p.category, p.alt_name, p.comm_num, p.allow_comm, p.fixed, p.tags, e.news_read, e.allow_rate, e.rating, e.vote_num, e.votes, e.view_edit, e.editdate, e.editor, e.reason FROM " . PREFIX . "_post p LEFT JOIN " . PREFIX . "_post_extras e ON (p.id=e.news_id) WHERE {$stop_list}date >= '{$year}-{$month}-{$day}' AND date < '{$year}-{$month}-{$day}' + INTERVAL 24 HOUR AND approve=1" . $where_date . " ORDER BY " . $news_sort_by . " " . $news_direction_by . " LIMIT " . $cstart . "," . $config['news_number'];
-				$sql_count = "SELECT COUNT(*) as count FROM " . PREFIX . "_post WHERE {$stop_list}date >= '{$year}-{$month}-{$day}' AND date < '{$year}-{$month}-{$day}' + INTERVAL 24 HOUR AND approve=1" . $where_date;
+				$sql_select = "SELECT p.id, p.autor, p.date, p.short_story, CHAR_LENGTH(p.full_story) as full_story, p.xfields, p.title, p.category, p.alt_name, p.comm_num, p.allow_comm, p.fixed, p.tags, e.news_read, e.allow_rate, e.rating, e.vote_num, e.votes, e.view_edit, e.editdate, e.editor, e.reason FROM " . PREFIX . "_post p LEFT JOIN " . PREFIX . "_post_extras e ON (p.id=e.news_id) WHERE category='10' AND {$stop_list}date >= '{$year}-{$month}-{$day}' AND date < '{$year}-{$month}-{$day}' + INTERVAL 24 HOUR AND approve=1" . $where_date . " ORDER BY " . $news_sort_by . " " . $news_direction_by . " LIMIT " . $cstart . "," . $config['news_number'];
+				$sql_count = "SELECT COUNT(*) as count FROM " . PREFIX . "_post WHERE category='10' AND {$stop_list}date >= '{$year}-{$month}-{$day}' AND date < '{$year}-{$month}-{$day}' + INTERVAL 24 HOUR AND approve=1" . $where_date;
 		
 			}
 			
@@ -799,6 +806,8 @@ elseif ($do == 'lastcomments') $nam_e = $lang['title_last'];
 elseif ($do == 'lostpassword') $nam_e = $lang['title_lost'];
 elseif ($do == 'search') $nam_e = $lang['title_search'];
 elseif ($do == 'static') $titl_e = $static_descr;
+elseif ($do == 'iphoto'){ $nam_e = $module['speedbar']; $titl_e = $module['title']; }
+elseif ($do == 'board'){ $nam_e = $module['speedbar']; $titl_e = $module['title']; }
 elseif ($do == 'lastnews') $nam_e = $lang['last_news'];
 elseif ($do == 'alltags') $nam_e = $lang['tag_cloud'];
 elseif ($do == 'tags') $nam_e = stripslashes($tag);
@@ -871,7 +880,6 @@ $metatags = <<<HTML
 <title>{$metatags['title']}</title>
 <meta name="description" content="{$metatags['description']}" />
 <meta name="keywords" content="{$metatags['keywords']}" />{$disable_index}
-<meta name="generator" content="DataLife Engine (http://dle-news.ru)" />
 {$s_meta}
 <link rel="search" type="application/opensearchdescription+xml" href="{$config['http_home_url']}engine/opensearch.php" title="{$config['home_title']}" />
 HTML;

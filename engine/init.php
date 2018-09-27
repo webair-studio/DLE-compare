@@ -509,7 +509,7 @@ if($config['allow_social'] AND $config['allow_registration'] AND !$is_logged) {
 	if (strpos($config['http_home_url'], "//") === 0) $return_domain = "http:".$config['http_home_url'];
 	elseif (strpos($config['http_home_url'], "/") === 0) $return_domain = "http://".$_SERVER['HTTP_HOST'].$config['http_home_url'];
 	else  $return_domain = $config['http_home_url'];
-	
+
 	if ( $social_config['vk'] ) {
 
 		$social_params = array(

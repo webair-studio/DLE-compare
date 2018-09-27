@@ -536,7 +536,7 @@ if( $allow_active_news ) {
 					unset($value3);
 
 				}
-		
+
 				if( empty( $xfieldsdata[$value[0]] ) ) {
 					$tpl->copy_template = preg_replace( "'\\[xfgiven_{$preg_safe_name}\\](.*?)\\[/xfgiven_{$preg_safe_name}\\]'is", "", $tpl->copy_template );
 					$tpl->copy_template = str_replace( "[xfnotgiven_{$value[0]}]", "", $tpl->copy_template );
@@ -565,7 +565,7 @@ if( $allow_active_news ) {
 						$xfieldsdata[$value[0]] = dle_substr( $xfieldsdata[$value[0]], 0, $count, $config['charset'] );
 							
 						if( ($temp_dmax = dle_strrpos( $xfieldsdata[$value[0]], ' ', $config['charset'] )) ) $xfieldsdata[$value[0]] = dle_substr( $xfieldsdata[$value[0]], 0, $temp_dmax, $config['charset'] );
-						
+
 					}
 		
 					$tpl->set( $matches[0], $xfieldsdata[$value[0]] );
@@ -607,13 +607,18 @@ if( $allow_active_news ) {
 				$row['full_story'] = stripslashes( $row['full_story'] );
 				preg_match_all('/(img|src)=("|\')[^"\'>]+/i', $row['full_story'], $media);
 				$data=preg_replace('/(img|src)("|\'|="|=\')(.*)/i',"$3",$media[0]);
+
+                $xf_data = xfieldsdataload( $row['xfields'] );//                echo $xf_data['post_photo'];
+                if($xf_data['post_photo']){$data[]=$xf_data['post_photo'];}
 	
 				foreach($data as $url) {
 					$info = pathinfo($url);
 					if (isset($info['extension'])) {
 						if ($info['filename'] == "spoiler-plus" OR $info['filename'] == "spoiler-minus" ) continue;
 						$info['extension'] = strtolower($info['extension']);
-						if (($info['extension'] == 'jpg') || ($info['extension'] == 'jpeg') || ($info['extension'] == 'gif') || ($info['extension'] == 'png')) { if($info['extension'] == 'jpg') $info['extension'] ='jpeg'; array_push($images, "<enclosure url=\"{$url}\" type=\"image/{$info['extension']}\" />"); }
+                        $url =str_replace ('http://rcmm.ru','',$url);
+                        $url =str_replace ('http://www.rcmm.ru','',$url);  
+						if (($info['extension'] == 'jpg') || ($info['extension'] == 'jpeg') || ($info['extension'] == 'gif') || ($info['extension'] == 'png')) { if($info['extension'] == 'jpg') $info['extension'] ='jpeg'; array_push($images, "<enclosure url=\"http://rcmm.ru{$url}\" type=\"image/{$info['extension']}\" />"); }
 					}
 				}
 

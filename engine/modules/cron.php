@@ -23,18 +23,17 @@ set_vars( "cron", $_TIME );
 if( $cron == 1 ) {
 	$db->query( "DELETE FROM " . PREFIX . "_spam_log WHERE is_spammer = '0'" );
 }
-
 if( $config['cache_count'] ) {
 	$result = $db->query( "SELECT COUNT(*) as count, news_id FROM " . PREFIX . "_views GROUP BY news_id" );
-	
+	$db->query( "TRUNCATE TABLE " . PREFIX . "_views" );
 	while ( $row = $db->get_array( $result ) ) {
-		
+		$row['count'] = intval($row['count']);
 		$db->query( "UPDATE " . PREFIX . "_post_extras SET news_read=news_read+{$row['count']} WHERE news_id='{$row['news_id']}'" );
 	
 	}
 	
 	$db->free( $result );
-	$db->query( "TRUNCATE TABLE " . PREFIX . "_views" );
+	
 
 	clear_cache( array('news_', 'full_', 'rss') );
 
@@ -44,7 +43,7 @@ if( $cron == 2 ) {
 	$db->query( "TRUNCATE TABLE " . PREFIX . "_login_log" );
 	$db->query( "TRUNCATE TABLE " . PREFIX . "_flood" );
 	$db->query( "TRUNCATE TABLE " . PREFIX . "_mail_log" );
-	$db->query( "TRUNCATE TABLE " . PREFIX . "_read_log" );
+	//$db->query( "TRUNCATE TABLE " . PREFIX . "_read_log" );
 	$db->query( "TRUNCATE TABLE " . PREFIX . "_spam_log" );
 	
 	$db->query( "DELETE FROM " . USERPREFIX . "_banned WHERE days != '0' AND date < '$_TIME' AND users_id = '0'" );

@@ -823,10 +823,9 @@ class ParseFilter {
 		} else {
 
 			if ($this->safe_mode AND !$config['allow_search_link'] AND $target)
-				return "<a href=\"" . $url['html'] . "\" " . $target . " rel=\"nofollow\">" . $url['show'] . "</a>" . $url['end'];
-			else
-				return "<a href=\"" . $url['html'] . "\" " . $target . ">" . $url['show'] . "</a>" . $url['end'];
-
+				return "<noindex><a href=\"" . $url['html'] . "\" " . $target . " rel=\"nofollow\">" . $url['show'] . "</a></noindex>" . $url['end'];
+	else
+return "<noindex><a href=\"" . $url['html'] . "\" " . $target . " rel=\"nofollow\">" . $url['show'] . "</a></noindex>" . $url['end'];
 		}
 
 	}
@@ -1162,11 +1161,9 @@ class ParseFilter {
 
 		if( preg_match( "/[?&;%<\[\]]/", $url ) ) {
 
-			if( $align != "" ) return "[img=" . $align . "]" . $url . "[/img]";
-			else return "[img]" . $url . "[/img]";
+			return $matches[0];
 
 		}
-
 		$url = $this->clear_url( urldecode( $url ) );
 
 		$info = $url;

@@ -18,7 +18,7 @@ if( ! defined( 'DATALIFEENGINE' ) ) {
 	die( "Hacking attempt!" );
 }
 
-	
+
 	$allow_list = explode( ',', $user_group[$member_id['user_group']]['allow_cats'] );
 	$perm = 1;
 	$i = 0;
@@ -122,7 +122,8 @@ if( ! defined( 'DATALIFEENGINE' ) ) {
 		if( $view_template == "print" ) $tpl->load_template( 'print.tpl' );
 		elseif( $category_id and $cat_info[$category_id]['full_tpl'] != '' ) $tpl->load_template( $cat_info[$category_id]['full_tpl'] . '.tpl' );
 		else $tpl->load_template( 'fullstory.tpl' );
-
+        $_IP=$_SERVER['REMOTE_ADDR'];
+        $db->query( "INSERT INTO " . PREFIX . "_read_log (news_id, ip, date) VALUES ('{$row['id']}', '{$_IP}', NOW())" );		 
 		if( $config['allow_read_count'] AND !$news_page AND !$cstart) {
 			if ( $config['allow_read_count'] == 2 ) {
 
@@ -819,7 +820,79 @@ if( ! defined( 'DATALIFEENGINE' ) ) {
 			if( $config['allow_quick_wysiwyg'] ) $allow_comments_ajax = true;
 		} else
 			$tpl->set_block( "'\\[edit\\](.*?)\\[/edit\\]'si", "" );
+
+// Начало: ссылки на следующую и предыдущую новости
+$backnext_allow = 1;
+    if( $backnext_allow ) {
+
+        if( !$config['allow_cache'] ) {
+            $config['allow_cache'] = 1;
+            $revert_cache = true;
+        } else
+            $revert_cache = false;
+
+        $back_link = dle_cache( "backlink", $row['id'] );
+        $next_link = dle_cache( "nextlink", $row['id'] );
+
+// Предыдущая новость
+if( $back_link === FALSE ) {
+    $backlink = $db->super_query( "SELECT id,  title, category, alt_name FROM " . PREFIX . "_post WHERE id < {$row['id']} AND category = '{$row['category']}' AND approve = '1' ORDER BY id DESC LIMIT 0,1" );
+    if( $backlink ) {
+        $backlink['category'] = intval( $backlink['category'] );
+            if( strlen( $backlink['title'] ) > 70 ) $backlink['title'] = substr( $backlink['title'], 0, 70 ) . "...";
+                if( $config['allow_alt_url'] ) {
+                    if( $backlink['category'] and $config['seo_type'] == 2 ) {
+                        $back_link = $config['http_home_url'] . get_url( $backlink['category'] ) . "/" . $backlink['id'] . "-" . $backlink['alt_name'] . ".html";
+                    } else {
+                        $back_link = $config['http_home_url'] . $backlink['id'] . "-" . $backlink['alt_name'] . ".html";
+                    }
+                } else {
+                    $back_link = $config['http_home_url'] . "index.php?newsid=" . $backlink['id'];
+                }
+        } else {
+            $back_link = "";
+        }
+        if( $back_link ) {
+            $back_link = "<a href=  \"" . $back_link . "\">" . "<span><</span> предыдущая ". stripslashes( $backlink[''] ) . "</a>";
+        }
+        $db->free();
+        create_cache( "backlink", $back_link, $row['id'] );
+    }
+
+// Следующая новость
+if( $next_link === FALSE ) {
+    $nextlink = $db->super_query( "SELECT id, title, category, alt_name FROM " . PREFIX . "_post WHERE id > {$row['id']} AND category = '{$row['category']}' AND approve = '1' ORDER BY id ASC LIMIT 0,1" );
+    if ( $nextlink ) {
+        $nextlink['category'] = intval( $nextlink['category'] );
+            if( strlen( $nextlink['title'] ) > 70 ) $nextlink['title'] = substr( $nextlink['title'], 0, 70 ) . "...";
+            if( $config['allow_alt_url'] ) {
+                    if( $nextlink['category'] and $config['seo_type'] == 2 ) {
+                        $next_link = $config['http_home_url'] . get_url( $nextlink['category'] ) . "/" . $nextlink['id'] . "-" . $nextlink['alt_name'] . ".html";
+                        } else {
+                            $next_link = $config['http_home_url'] . $nextlink['id'] . "-" . $nextlink['alt_name'] . ".html";
+                        }
+                } else {
+                    $next_link = $config['http_home_url'] . "index.php?newsid=" . $nextlink['id'];
+                }
+            } else {
+                $next_link = "";
+            }
+            if( $next_link ) {
+                $next_link = "<span style=\"float:right\"><a href=\"" . $next_link . "\">" . "следующая <span>></span>" . stripslashes( $nextlink[''] ) . "</a></span>";
+            }
+            $db->free();
+            create_cache( "nextlink", $next_link, $row['id'] );
+        }
+
+// Сссылки
+        $tpl->set( '{back-link}', $back_link );
+        $tpl->set( '{next-link}', $next_link );
+
+        if( $revert_cache ) $config['allow_cache'] = 0;
+    }
+// Конец: ссылки на следующую и предыдущую новости
 		
+
 		if( $config['related_news'] AND $view_template != "print") {
 			
 			if ( $allow_full_cache ) $related_buffer = dle_cache( "related", $row['id'].$config['skin'], true ); else $related_buffer = false;
@@ -950,9 +1023,14 @@ if( ! defined( 'DATALIFEENGINE' ) ) {
 
 				if( strpos( $tpl2->copy_template, "[xfvalue_" ) !== false OR strpos( $tpl2->copy_template, "[xfgiven_" ) !== false ) { $xfound = true; }
 				else $xfound = false;
-								
-				while ( $related = $db->get_row() ) {
-					
+				$rel=0;
+              	include_once ENGINE_DIR . '/modules/banners.php';
+
+ 				while ( $related = $db->get_row() ) {
+                     $rel++;
+                     if ($rel==4){	$tpl2->set( '{banner}', ''.$banners['yandex_block'].'' );    }
+                     else{$tpl2->set( '{banner}', '');}
+
 					if ( $first_show ) $related_ids[] =	$related['id'];
 
 					$related['date'] = strtotime( $related['date'] );
@@ -1109,7 +1187,7 @@ if( ! defined( 'DATALIFEENGINE' ) ) {
 
 					if( $xfound ) {
 						$xfieldsdata = xfieldsdataload( $related['xfields'] );
-						
+
 						foreach ( $xfields as $value ) {
 							$preg_safe_name = preg_quote( $value[0], "'" );
 
@@ -1350,7 +1428,9 @@ if( ! defined( 'DATALIFEENGINE' ) ) {
 			}
 		}
 
-		if ( count($images) ) $social_tags['image'] = $images[0];
+	   //	if ( count($images) ) $social_tags['image'] = $images[0];
+        $x_tmp = xfieldsdataload(  $row['xfields'] );
+        $social_tags['image'] = $x_tmp['post_photo'];
 
 		if ( preg_match("#<!--dle_video_begin:(.+?)-->#is", $allcontent, $media) ){
 			$media[1] = explode( ",", trim( $media[1] ) );
@@ -1548,8 +1628,9 @@ if( ! defined( 'DATALIFEENGINE' ) ) {
 	
 	if( !$news_found AND !$perm ) msgbox( $lang['all_err_1'], "<b>{$user_group[$member_id['user_group']]['group_name']}</b> " . $lang['news_err_28'] );
 	elseif( !$news_found ) {
-		@header( "HTTP/1.0 404 Not Found" );
-		msgbox( $lang['all_err_1'], $lang['news_err_12'] );
+	   	@header( "HTTP/1.0 404 Not Found" );
+       //@header( " Location: /404.html " );
+	   	msgbox( $lang['all_err_1'], $lang['news_err_12'] );
 	}
 
 //####################################################################################################################

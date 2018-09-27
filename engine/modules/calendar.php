@@ -166,14 +166,14 @@ if( $config['allow_calendar'] ) {
 				$approve = " AND approve=1";
 			}
 			
-			$sql = "SELECT DISTINCT DAYOFMONTH(date) as day FROM " . PREFIX . "_post WHERE date >= '{$year}-{$month}-01' AND date < '{$year}-{$month}-01' + INTERVAL 1 MONTH" . $approve . $where_date;
+			$sql = "SELECT DISTINCT DAYOFMONTH(date) as day FROM " . PREFIX . "_post WHERE category='10' AND  date >= '{$year}-{$month}-01' AND date < '{$year}-{$month}-01' + INTERVAL 1 MONTH" . $approve . $where_date;
 			
 			$this_month = $month;
 			$this_year = $year;
 		
 		} else {
 			
-			$sql = "SELECT DISTINCT DAYOFMONTH(date) as day FROM " . PREFIX . "_post WHERE date >= '{$this_year}-{$this_month}-01' AND date < '{$this_year}-{$this_month}-01' + INTERVAL 1 MONTH AND approve=1" . $where_date;
+			$sql = "SELECT DISTINCT DAYOFMONTH(date) as day FROM " . PREFIX . "_post WHERE category='10' AND  date >= '{$this_year}-{$this_month}-01' AND date < '{$this_year}-{$this_month}-01' + INTERVAL 1 MONTH AND approve=1" . $where_date;
 		
 		}
 		
@@ -209,7 +209,7 @@ if( $config['allow_archives'] ) {
 		} else
 			$where_date = "";
 		
-		$db->query( "SELECT DATE_FORMAT(date,'%b %Y') AS m_date, MAX(date) AS max, COUNT(id) AS cnt FROM " . PREFIX . "_post WHERE approve=1" . $where_date . " GROUP BY m_date ORDER BY max desc" );
+		$db->query( "SELECT DATE_FORMAT(date,'%b %Y') AS m_date, MAX(date) AS max, COUNT(id) AS cnt FROM " . PREFIX . "_post WHERE category='10' AND  approve=1" . $where_date . " GROUP BY m_date ORDER BY max desc" );
 		
 		$news_archive = array ();
 		

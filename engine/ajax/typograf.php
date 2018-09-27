@@ -68,6 +68,12 @@ if( ! $user_group ) {
 
 $txt = trim( convert_unicode( $_POST['txt'], $config['charset'] ) );
 
+require_once ENGINE_DIR . '/classes/parse.class.php';
+$parse = new ParseFilter();
+$txt = $parse->process( $txt );
+$txt = preg_replace( "/javascript:/i", "j&#1072;vascript&#58;", $txt );
+$txt = preg_replace( "/data:/i", "d&#1072;ta:", $txt );
+
 if( function_exists( "get_magic_quotes_gpc" ) && get_magic_quotes_gpc() ) $txt = stripslashes( $txt );  
 
 require_once(ENGINE_DIR . '/classes/typograf.class.php');

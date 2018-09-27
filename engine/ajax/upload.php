@@ -725,7 +725,7 @@ HTML;
 
 	}
 
-	if( $config['allow_watermark'] ) $upload_param .= "<hr /><input type=\"checkbox\" name=\"make_watermark\" value=\"yes\" id=\"make_watermark\" checked=\"checked\">&nbsp;<label for=\"make_watermark\">{$lang['images_water']}</label>";
+	if( $config['allow_watermark'] ) $upload_param .= "<hr /><input type=\"checkbox\" name=\"make_watermark\" value=\"yes\" id=\"make_watermark\" >&nbsp;<label for=\"make_watermark\">{$lang['images_water']}</label>";
 
 	if( !extension_loaded( "gd" ) ) $upload_param = "<font color=\"red\"><b>{$lang['images_nogd']}</b></font>";
 

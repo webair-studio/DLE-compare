@@ -196,7 +196,7 @@ if( !file_exists( $tpl->dir . "/rss.tpl" ) ) {
 <title>{title}</title>
 <guid isPermaLink="true">{rsslink}</guid>
 <link>{rsslink}</link>
-<description>{short-story}</description>
+
 <category>{category}</category>
 <dc:creator>{rssauthor}</dc:creator>
 <pubDate>{rssdate}</pubDate>
@@ -205,7 +205,7 @@ if( !file_exists( $tpl->dir . "/rss.tpl" ) ) {
 <title>{title}</title>
 <guid isPermaLink="true">{rsslink}</guid>
 <link>{rsslink}</link>
-<description><![CDATA[{short-story}]]></description>
+
 <category><![CDATA[{category}]]></category>
 <dc:creator>{rssauthor}</dc:creator>
 <pubDate>{rssdate}</pubDate>
@@ -213,7 +213,7 @@ if( !file_exists( $tpl->dir . "/rss.tpl" ) ) {
 [yandexrss]<item>
 <title>{title}</title>
 <link>{rsslink}</link>
-<description>{short-story}</description>
+
 <category>{category}</category>{images}
 <pubDate>{rssdate}</pubDate>
 <yandex:full-text>{full-story}</yandex:full-text>
@@ -223,14 +223,14 @@ HTML;
 	$tpl->copy_template = $tpl->template;
 
 } else {
-	
+
 	$tpl->load_template( 'rss.tpl' );
-	
+
 }
 
 
 if( $config['site_offline'] OR ! $config['allow_rss'] ) {
-	
+
 	$rss_content .= <<<XML
 <item>
 <title>RSS in offline mode</title>
@@ -244,17 +244,17 @@ if( $config['site_offline'] OR ! $config['allow_rss'] ) {
 XML;
 
 } else {
-	
+
 	if( $config['rss_format'] == 1 ) {
-		
+
 		$tpl->template = str_replace( '[fullrss]', '', $tpl->template );
 		$tpl->template = str_replace( '[/fullrss]', '', $tpl->template );
 		$tpl->template = preg_replace( "'\\[yandexrss\\](.*?)\\[/yandexrss\\]'si", "", $tpl->template );
 		$tpl->template = preg_replace( "'\\[shortrss\\](.*?)\\[/shortrss\\]'si", "", $tpl->template );
 		$tpl->template = trim($tpl->template);
-		
+
 	} elseif( $config['rss_format'] == 2 ) {
-		
+
 		$rss_content = <<<XML
 <?xml version="1.0" encoding="{$config['charset']}"?>
 <rss xmlns:yandex="http://news.yandex.ru" xmlns:media="http://search.yahoo.com/mrss/" version="2.0">
@@ -267,25 +267,25 @@ XML;
 <yandex:logo type="square">{$config['http_home_url']}yandexsquarelogo.png</yandex:logo>
 <generator>DataLife Engine</generator>
 XML;
-		
+
 		$tpl->template = str_replace( '[yandexrss]', '', $tpl->template );
 		$tpl->template = str_replace( '[/yandexrss]', '', $tpl->template );
 		$tpl->template = preg_replace( "'\\[fullrss\\](.*?)\\[/fullrss\\]'si", "", $tpl->template );
 		$tpl->template = preg_replace( "'\\[shortrss\\](.*?)\\[/shortrss\\]'si", "", $tpl->template );
-		$tpl->template = trim($tpl->template);		
+		$tpl->template = trim($tpl->template);
 	} else {
-		
+
 		$tpl->template = str_replace( '[shortrss]', '', $tpl->template );
 		$tpl->template = str_replace( '[/shortrss]', '', $tpl->template );
 		$tpl->template = preg_replace( "'\\[fullrss\\](.*?)\\[/fullrss\\]'si", "", $tpl->template );
 		$tpl->template = preg_replace( "'\\[yandexrss\\](.*?)\\[/yandexrss\\]'si", "", $tpl->template );
-		$tpl->template = trim($tpl->template);	
+		$tpl->template = trim($tpl->template);
 	}
-	
+
 	$tpl->copy_template = $tpl->template;
-	
+
 	include_once ENGINE_DIR . '/engine.php';
-	
+
 	$rss_content .= $tpl->result['content'];
 }
 

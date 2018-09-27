@@ -371,6 +371,14 @@ elseif( $action == "edit" ) {
 			<textarea name="keywords" style="width:100%;max-width:350px;" rows="5">{$row['keywords']}</textarea>
 		  </div>
 		 </div>
+         <!--**************************-->
+		<div class="form-group">
+		  <label class="control-label col-lg-2">Заголовок H1</label>
+		  <div class="col-lg-10">
+			<input type="text" name="h1" style="width:100%;max-width:350px;" value="{$row['h1']}">
+		  </div>
+		</div>
+		 <!--**************************-->
 		<div class="form-group">
 		  <label class="control-label col-lg-2">{$lang['cat_parent']}</label>
 		  <div class="col-lg-10">
@@ -478,6 +486,7 @@ elseif( $action == "doedit" ) {
 	$meta_title = $db->safesql( htmlspecialchars ( strip_tags( stripslashes( $_POST['meta_title'] ) ), ENT_QUOTES, $config['charset'] ) );
 	$description = $db->safesql( dle_substr( strip_tags( stripslashes( $_POST['descr'] ) ), 0, 200, $config['charset'] ) );
 	$keywords = $db->safesql( str_replace( $quotes, " ", strip_tags( stripslashes( $_POST['keywords'] ) ) ) );
+	$h1 = $db->safesql( dle_substr( strip_tags( stripslashes( $_POST['h1'] ) ), 0, 200, $config['charset'] ) );
 
 	$reserved_name = array('tags','xfsearch','user','lastnews','catalog','newposts','favorites');
 
@@ -545,7 +554,7 @@ elseif( $action == "doedit" ) {
 		msg( "error", $lang['cat_error'], $lang['cat_noparentid'], "?mod=categories" );
 	}
 
-	$db->query( "UPDATE " . PREFIX . "_category SET parentid='$parentid', name='$cat_name', alt_name='$alt_cat_name', icon='$cat_icon', skin='$skin_name', descr='$description', keywords='$keywords', news_sort='$news_sort', news_msort='$news_msort', news_number='$news_number', short_tpl='$short_tpl', full_tpl='$full_tpl', metatitle='$meta_title', show_sub='$show_sub', allow_rss='$allow_rss' WHERE id='{$catid}'" );
+	$db->query( "UPDATE " . PREFIX . "_category SET parentid='$parentid', name='$cat_name', alt_name='$alt_cat_name', icon='$cat_icon', skin='$skin_name', descr='$description', h1='$h1', keywords='$keywords', news_sort='$news_sort', news_msort='$news_msort', news_number='$news_number', short_tpl='$short_tpl', full_tpl='$full_tpl', metatitle='$meta_title', show_sub='$show_sub', allow_rss='$allow_rss' WHERE id='{$catid}'" );
 	$db->query( "INSERT INTO " . USERPREFIX . "_admin_logs (name, date, ip, action, extras) values ('".$db->safesql($member_id['name'])."', '{$_TIME}', '{$_IP}', '14', '{$cat_name}')" );
 	
 	@unlink( ENGINE_DIR . '/cache/system/category.php' );
@@ -611,6 +620,14 @@ echo <<<HTML
 			<textarea name="keywords" style="width:100%;max-width:350px;" rows="5"></textarea>
 		  </div>
 		 </div>
+		 <!--**************************-->
+		<div class="form-group">
+		  <label class="control-label col-lg-2">Заголовок H1</label>
+		  <div class="col-lg-10">
+			<input type="text" name="h1" style="width:100%;max-width:350px;">
+		  </div>
+		</div>
+		 <!--**************************-->
 		<div class="form-group">
 		  <label class="control-label col-lg-2">{$lang['cat_parent']}</label>
 		  <div class="col-lg-10">

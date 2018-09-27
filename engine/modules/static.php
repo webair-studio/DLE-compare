@@ -391,7 +391,7 @@ if( $static_result['id'] ) {
 } else {
 	
 	@header( "HTTP/1.0 404 Not Found" );
-	$lang['static_page_err'] = str_replace ("{page}", $name.".html", $lang['static_page_err']);
+   $lang['static_page_err'] = str_replace ("{page}", $name.".html", $lang['static_page_err']);
 	msgbox( $lang['all_err_1'], $lang['static_page_err'] );
 
 }

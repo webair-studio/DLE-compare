@@ -241,7 +241,16 @@ function check_newscount( $matches=array() ) {
 }
 
 function msgbox($title, $text) {
-	global $tpl;
+    global $tpl, $lang;
+    if( strpos($text,' is not available for you: its address could have changed or it has been removed. Please use the search')|| $text == $lang['news_err_27'] ) {
+        require_once ROOT_DIR.'/404.html';
+        die();
+    }else{  $tplName = 'info.tpl';}
+
+	if (!class_exists('dle_template')) {
+	    return;
+	}
+
 
 	if (!class_exists('dle_template')) {
 	    return;

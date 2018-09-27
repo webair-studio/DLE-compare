@@ -21,6 +21,7 @@ if( !defined( 'DATALIFEENGINE' ) OR !defined( 'LOGGED_IN' ) ) {
 if( ! $user_group[$member_id['user_group']]['admin_editnews'] ) {
 	msg( "error", $lang['addnews_denied'], $lang['edit_denied'] );
 }
+$db2 = new db;
 
 if( isset( $_REQUEST['author'] ) ) $author = $db->safesql( trim( htmlspecialchars( $_REQUEST['author'], ENT_QUOTES, $config['charset'] ) ) ); else $author = "";
 if( isset( $_REQUEST['ifdelete'] ) ) $ifdelete = $_REQUEST['ifdelete']; else $ifdelete = "";
@@ -96,6 +97,12 @@ if( $action == "list" ) {
 		$where[] = "date <= '$tonewsdate'";
 
 	}
+
+if ($member_id['user_group']==3) {  // группа редакторов видет только свои новости
+    $db->query("SELECT `name` FROM `" . PREFIX . "_users` WHERE `user_group` =3" );
+    while($row = $db->get_row()) {$rows[] =  "autor = '{$row['name']}'";}
+    $where[]=  implode (' OR ',$rows);
+}
 
 	if( $_REQUEST['news_status'] == 1 ) $where[] = "approve = '1'";
 	elseif( $_REQUEST['news_status'] == 2 ) $where[] = "approve = '0'";
@@ -182,8 +189,12 @@ if( $action == "list" ) {
 	} else {
 		$search_order_view['----'] = 'selected';
 	}
+                 //p.editdate,
 
-	$db->query( "SELECT p.id, p.date, p.title, p.category, p.autor, p.alt_name, p.comm_num, p.approve, p.fixed, e.news_read, e.votes FROM " . PREFIX . "_post p LEFT JOIN " . PREFIX . "_post_extras e ON (p.id=e.news_id) " . $where . " ORDER BY " . $order_by . " LIMIT $start_from,$news_per_page" );
+
+
+	$db->query( "SELECT p.id, p.date, p.title, p.category, p.autor, p.alt_name, p.comm_num, p.approve, p.approve_rss, p.fixed, e.news_read, e.votes FROM " . PREFIX . "_post p LEFT JOIN " . PREFIX . "_post_extras e ON (p.id=e.news_id) " . $where . " ORDER BY " . $order_by . " LIMIT $start_from,$news_per_page" );
+//    echo "SELECT p.id, p.date, p.title, p.category, p.autor, p.alt_name, p.comm_num, p.approve, p.approve_rss, p.fixed, e.news_read, e.votes FROM " . PREFIX . "_post p LEFT JOIN " . PREFIX . "_post_extras e ON (p.id=e.news_id) " . $where . " ORDER BY " . $order_by . " LIMIT $start_from,$news_per_page";
 
 	// Prelist Entries
 
@@ -205,8 +216,10 @@ if( $action == "list" ) {
 
 		$title = htmlspecialchars( stripslashes( $title ), ENT_QUOTES, $config['charset'] );
 		$title = str_replace("&amp;","&", $title );
+        $editdate = date( "d.m.Y H:i", strtotime( $row['date'] ) );
+        $entries .= "<tr><td>{$editdate}</td>";
 
-		$entries .= "<tr><td><span class=\"news-list-date\">{$itemdate} - </span>";
+		$entries .= "<td><!--<span class=\"news-list-date\">{$itemdate} - </span>-->";
 
 		if( $row['fixed'] ) $entries .= "<span class=\"badge badge-red\">{$lang['edit_fix']}</span>&nbsp;&nbsp;";
 
@@ -255,8 +268,22 @@ HTML;
 			$comm_link = $row['comm_num'];
 		}
 
-		$entries .= "<a title='{$lang['edit_act']}' href=\"?mod=editnews&action=editnews&id={$row['id']}\">{$title}</a>
-        <td class=\"news-list-tab\" style=\"text-align: center\"><a data-original-title=\"{$lang['st_views']}\" class=\"status-info tip\" href=\"{$full_link}\" target=\"_blank\">{$row['news_read']}</a></td><td class=\"news-list-tab\" align=\"center\">" . $comm_link;
+		$entries .= "<a title='{$lang['edit_act']}' href=\"?mod=editnews&action=editnews&id={$row['id']}\">{$title}</a> ";
+
+        $entries .="<td class=\"news-list-tab\" align=\"center\">".$row['id']."</td>" ;
+        $entries .="<td class=\"news-list-tab\" align=\"center\">";
+        if( $row['approve_rss'] ) $entries .= "<span class=\"status-success\"><b><i class=\"icon-ok-sign\"></i></b></span>";
+		else $entries .= "<span class=\"status-error\"><b><i class=\"icon-exclamation-sign\"></i></b></span>";
+        $entries .= "</td>" ;
+
+        $res30 = $db2->super_query("SELECT COUNT(*) FROM  " . PREFIX . "_read_log WHERE news_id = '". $row['id'] ."' AND date >= Date_Sub(Curdate(), INTERVAL 30 day) ");
+        $count30days = $res30['COUNT(*)'];
+        // $count30days = 666;
+
+        $entries .="<td class=\"news-list-tab\" style=\"text-align: center\"><a data-original-title=\"{$lang['st_views']}\" class=\"status-info tip\" href=\"{$full_link}\" target=\"_blank\">{$row['news_read']}</a></td>
+        <td class=\"news-list-tab\" style=\"text-align: center\"><a data-original-title=\"{$lang['st_views']} за 30 дней\" class=\"status-info tip\" href=\"{$full_link}\" target=\"_blank\">{$count30days}</a></td>
+
+        <td class=\"news-list-tab\" align=\"center\">" . $comm_link;
 
 		$entries .= "</td><td style=\"text-align: center\">";
 
@@ -506,13 +533,18 @@ function cdelete(id){
 
     <table class="table table-normal table-hover">
       <thead>
-      <tr>
-        <td>{$lang['edit_title']}</td>
+      <tr><td style="width: 110px">Дата создания</td>
+        <td >{$lang['edit_title']}</td>
+        <td style="width: 60px">ID</td>
+        <td style="width: 60px">Ya <i class="icon-rss" data-original-title="Опубликовано ли Yandex"></i></td>
         <td class="news-list-tab" style="width: 60px"><i class="icon-eye-open tip" data-original-title="{$lang['st_views']}"></i></td>
+        <td class="news-list-tab" style="width: 60px"><i class="icon-eye-open tip" data-original-title="{$lang['st_views']} 30 дней"></i></td>
         <td class="news-list-tab" style="width: 60px"><i class="icon-comment-alt tip" data-original-title="{$lang['edit_com']}"></i></td>
+
         <td style="width: 60px">{$lang['edit_approve']}</td>
+
         <td class="news-list-tab">{$lang['edit_cl']}</td>
-        <td style="width: 140px">{$lang['edit_autor']}</td>
+        <td style="width: 80px">{$lang['edit_autor']}</td>
         <td style="width: 40px"><input type="checkbox" name="master_box" title="{$lang['edit_selall']}" onclick="javascript:ckeck_uncheck_all();"></td>
       </tr>
       </thead>
@@ -1107,6 +1139,7 @@ HTML;
 	if( $row['allow_comm'] ) $ifch = "checked";	else $ifch = "";
 	if( $row['allow_main'] ) $ifmain = "checked"; else $ifmain = "";
 	if( $row['approve'] ) $ifapp = "checked"; else $ifapp = "";
+    if( $row['approve_rss'] ) $approve_rss = "checked"; else $approve_rss = "";
 	if( $row['fixed'] ) $iffix = "checked";	else $iffix = "";
 	if( $row['allow_rate'] ) $ifrat = "checked"; else $ifrat = "";
 	if( $row['disable_index'] ) $ifdis = "checked"; else $ifdis = "";
@@ -1239,6 +1272,11 @@ echo <<<HTML
 								  <div class="row">
 									<div class="col-md-12"><input class="icheck" type="checkbox" id="approve" name="approve" value="1" {$ifapp}><label for="approve">{$lang['addnews_mod']}</label></div>
 								  </div>
+
+                                  <div class="row">
+									<div class="col-md-12"><input class="icheck" type="checkbox" id="approve_rss" name="approve_rss" value="1" {$approve_rss}><label for="approve_rss">Добавлять новость в Yandex RSS</label></div>
+								  </div>
+
 								  <div class="row">
 									<div class="col-md-3" style="max-width:300px;" >{$main_input}</div>
 									<div class="col-md-3" style="max-width:250px;"><input class="icheck" type="checkbox" id="allow_comm" name="allow_comm" value="1" {$ifch}><label for="allow_comm">{$lang['addnews_comm']}</label></div>
@@ -1417,6 +1455,7 @@ elseif( $action == "doeditnews" ) {
 	$allow_comm = isset( $_POST['allow_comm'] ) ? intval( $_POST['allow_comm'] ) : 0;
 	$allow_main = isset( $_POST['allow_main'] ) ? intval( $_POST['allow_main'] ) : 0;
 	$approve = isset( $_POST['approve'] ) ? intval( $_POST['approve'] ) : 0;
+   	$approve_rss = isset( $_POST['approve_rss'] ) ? intval( $_POST['approve_rss'] ) : 0;
 	$allow_rating = isset( $_POST['allow_rating'] ) ? intval( $_POST['allow_rating'] ) : 0;
 	$news_fixed = isset( $_POST['news_fixed'] ) ? intval( $_POST['news_fixed'] ) : 0;
 	$allow_br = isset( $_POST['allow_br'] ) ? intval( $_POST['allow_br'] ) : 0;
@@ -1564,7 +1603,7 @@ elseif( $action == "doeditnews" ) {
 	$okdeleted = FALSE;
 	$okchanges = FALSE;
 
-	$db->query( "SELECT id, title, autor, date, category, approve, tags, news_id FROM " . PREFIX . "_post LEFT JOIN " . PREFIX . "_post_extras ON (" . PREFIX . "_post.id=" . PREFIX . "_post_extras.news_id) WHERE id = '$id'" );
+	$db->query( "SELECT id, title, autor, date, category, approve,approve_rss, tags, news_id FROM " . PREFIX . "_post LEFT JOIN " . PREFIX . "_post_extras ON (" . PREFIX . "_post.id=" . PREFIX . "_post_extras.news_id) WHERE id = '$id'" );
 
 	while ( $row = $db->get_row() ) {
 		$item_db[0] = $row['id'];
@@ -1575,6 +1614,7 @@ elseif( $action == "doeditnews" ) {
 		$item_db[5] = explode( ',', $row['category'] );
 		$item_db[6] = $row['news_id'];
 		$item_db[7] = strtotime( $row['date'] );
+        $item_db[8] = $row['approve_rss'];
 	}
 
 	$db->free();
@@ -1645,11 +1685,11 @@ elseif( $action == "doeditnews" ) {
 
 					}
 
-					$db->query( "UPDATE " . PREFIX . "_post SET title='$title', date='$thistime', short_story='$short_story', full_story='$full_story', xfields='$filecontents', descr='{$metatags['description']}', keywords='{$metatags['keywords']}', category='$category_list', alt_name='$alt_name', allow_comm='$allow_comm', approve='$approve', allow_main='$allow_main', fixed='$news_fixed', allow_br='$allow_br', symbol='$catalog_url', tags='{$_POST['tags']}', metatitle='{$metatags['title']}' WHERE id='$item_db[0]'" );
+					$db->query( "UPDATE " . PREFIX . "_post SET title='$title', date='$thistime', short_story='$short_story', full_story='$full_story', xfields='$filecontents', descr='{$metatags['description']}', keywords='{$metatags['keywords']}', category='$category_list', alt_name='$alt_name', allow_comm='$allow_comm', approve='$approve', approve_rss='$approve_rss',allow_main='$allow_main', fixed='$news_fixed', allow_br='$allow_br', symbol='$catalog_url', tags='{$_POST['tags']}', metatitle='{$metatags['title']}' WHERE id='$item_db[0]'" );
 
 				} else {
 
-					$db->query( "UPDATE " . PREFIX . "_post SET title='$title', short_story='$short_story', full_story='$full_story', xfields='$filecontents', descr='{$metatags['description']}', keywords='{$metatags['keywords']}', category='$category_list', alt_name='$alt_name', allow_comm='$allow_comm', approve='$approve', allow_main='$allow_main', fixed='$news_fixed', allow_br='$allow_br', symbol='$catalog_url', tags='{$_POST['tags']}', metatitle='{$metatags['title']}' WHERE id='$item_db[0]'" );
+					$db->query( "UPDATE " . PREFIX . "_post SET title='$title', short_story='$short_story', full_story='$full_story', xfields='$filecontents', descr='{$metatags['description']}', keywords='{$metatags['keywords']}', category='$category_list', alt_name='$alt_name', allow_comm='$allow_comm', approve='$approve',approve_rss='$approve_rss', allow_main='$allow_main', fixed='$news_fixed', allow_br='$allow_br', symbol='$catalog_url', tags='{$_POST['tags']}', metatitle='{$metatags['title']}' WHERE id='$item_db[0]'" );
 				}
 
 				if ($item_db[6]) $db->query( "UPDATE " . PREFIX . "_post_extras SET allow_rate='$allow_rating', votes='$add_vote', disable_index='$disable_index', access='$group_regel', editdate='$added_time', editor='{$member_id['name']}', reason='$editreason', view_edit='$view_edit' WHERE news_id='$item_db[0]'" );

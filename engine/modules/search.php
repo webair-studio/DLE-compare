@@ -199,9 +199,9 @@ function full_submit(prm){
 // end -->
 </script>
 HTML;
-	
+
 	$searchtable = <<<HTML
-<form name="fullsearch" id="fullsearch" action="{$config['http_home_url']}index.php?do=search" method="post">
+<form name="fullsearch" id="fullsearch" action="{$config['http_home_url']}index.php?do=search&full_search=1" method="post">
 <input type="hidden" name="do" id="do" value="search" />
 <input type="hidden" name="subaction" id="subaction" value="search" />
 <input type="hidden" name="search_start" id="search_start" value="$search_start" />
@@ -369,7 +369,7 @@ HTML;
 HTML;
 	
 	} else {
-
+          $smartphone_detected=0;   
 	if ( $smartphone_detected ) {
 
 		$link_full_search = "";
@@ -646,7 +646,7 @@ HTML;
 			
 			// ------ Запрос к базе	
 			$from_num = $search_start + 1;
-			
+
 			if ($config['full_search']) {
 
 				if( $sortby != "" ) $order_by = "ORDER BY " . $order_by; else $order_by = "";
@@ -658,6 +658,8 @@ HTML;
 				$sql_request = "$sql_find ORDER BY $order_by LIMIT $search_start,{$config['search_number']}";
 	
 			}
+
+            
 
 			if ($titleonly != 1) {	
 				$sql_result = $db->query( $sql_request );
